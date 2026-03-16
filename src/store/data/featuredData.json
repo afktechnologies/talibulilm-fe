@@ -1,0 +1,20 @@
+[
+  {
+    "image": "quran.png",
+    "title": "Quran",
+    "desp": "Learn about the significance and interpretation of the Quranic verses",
+    "slug":"quran"
+  },
+  {
+    "image": "supplications.png",
+    "title": "Prophetic Supplications",
+    "desp": "A collection of prophetic dua and prayers for daily life ",
+    "slug":"supplication"
+  },
+  {
+    "image": "hadith.png",
+    "title": "Hadiths",
+    "desp": "Discover the authentic teachings taught by Prophet Muhammad (PBUH)",
+    "slug":"hadith"
+  }
+]

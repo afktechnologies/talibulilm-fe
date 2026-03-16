@@ -1,0 +1,27 @@
+.navbar {
+  position: none;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+  height: 6rem;
+  }
+  
+  .show {
+    transform: translateY(0);
+  }
+  
+  .hide {
+    transform: translateY(-100%); 
+  }
+
+  @media (max-width: 973px) {
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+    }
+  }

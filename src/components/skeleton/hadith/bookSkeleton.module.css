@@ -1,0 +1,78 @@
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.title {
+  height: 28px;
+  width: 200px;
+  margin-bottom: 2rem;
+  border-radius: 6px;
+  composes: shimmer;
+}
+
+.sidebar {
+  width: 80px;
+  height: 100px;
+  border-radius: 8px 0 0 8px;
+  composes: shimmer;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  height: 100px;
+  border-radius: 0 10px 10px 0;
+  padding: 0 2rem;
+  composes: shimmer;
+}
+
+.bookNames {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lineLong {
+  height: 18px;
+  width: 140px;
+  border-radius: 4px;
+  composes: shimmer;
+}
+
+.lineShort {
+  height: 14px;
+  width: 90px;
+  border-radius: 4px;
+  composes: shimmer;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  composes: shimmer;
+}
+
+/* Smaller sizes for mobile */
+@media (max-width: 48rem) {
+  .sidebar {
+    height: 80px;
+  }
+  .details {
+    height: 80px;
+    padding: 0 0.9rem;
+  }
+}

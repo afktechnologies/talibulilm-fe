@@ -1,0 +1,341 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  background-image: url(../../../public/Images/recentPostBG.png);
+  overflow: hidden;
+  margin: 2rem 0;
+  padding: 3rem 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  width: 100%;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.title h2 {
+  font-size: 2rem;
+}
+
+.title p {
+  font-size: 1rem;
+}
+
+.title button {
+  font-size: 1rem;
+  padding: 0.6rem 2.5rem;
+  background-color: var(--blue);
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+  gap: 3rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+  height: 420px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.headings {
+  display: flex;
+  margin: 1rem 2rem 0.8rem 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1rem;
+}
+
+/* .profile p {
+  font-size: 0.7rem;
+} */
+
+.options svg {
+  cursor: pointer;
+}
+
+.image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 2rem 0.5rem 2rem;
+}
+
+.playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--red);
+  background: white;
+  border-radius: 50%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.playButton svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.playButton:hover {
+  background: var(--red);
+  color: white;
+}
+
+.desp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  margin: 0 2rem;
+}
+
+.desp h3 {
+  font-size: 1rem;
+}
+
+.details {
+  display: flex;
+  gap: 1rem;
+  margin: 0.5rem 2rem;
+}
+
+.details p {
+  padding: 0.1rem 0.5rem;
+  background-color: var(--light-grey);
+  font-size: 0.9rem;
+}
+
+/* @media (max-width: 1030px) {
+
+  }*/
+
+@media (max-width: 973px) {
+  .title h2 {
+    font-size: 1.4rem;
+  }
+
+  .title p {
+    font-size: 0.9rem;
+  }
+
+  .title button {
+    font-size: 1rem;
+    padding: 0.6rem 2rem;
+  }
+
+  .card {
+    width: 450px;
+    height: 300px;
+  }
+
+  .image img {
+    width: 450px;
+    height: 160px;
+  }
+  .desp h3 {
+    font-size: 0.9rem;
+  }
+
+  .playButton {
+  padding: .5rem;
+}
+
+.playButton svg {
+  width: 2rem;
+  height: 2rem;
+}
+}
+
+@media (max-width: 768px) {
+
+  .title h2 {
+  font-size: 1.6rem;
+}
+
+.title p {
+  font-size: 1rem;
+}
+
+  .content {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 550px;
+    height: 400px;
+  }
+
+  .image img {
+    width: 550px;
+    height: 260px;
+  }
+
+.desp h3 {
+  font-size: 1rem;
+}
+
+  .playButton {
+  padding: .8rem;
+}
+
+.playButton svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+}
+
+@media (max-width: 600px) {
+
+  .content {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 450px;
+    height: 350px;
+  }
+
+  .image img {
+    width: 450px;
+    height: 200px;
+  }
+.desp h3 {
+  font-size: .9rem;
+}
+  .playButton {
+  padding: .5rem;
+}
+
+.playButton svg {
+  width: 2rem;
+  height: 2rem;
+}
+}
+
+@media (max-width: 500px) {
+
+  .content {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 400px;
+    height: 300px;
+  }
+  .image img {
+    width: 400px;
+    height: 160px;
+  }
+
+.desp h3 {
+  font-size: .9rem;
+}
+}
+
+@media (max-width: 450px) {
+  .content {
+    flex-direction: column;
+       margin: 1.5rem;
+  }
+
+  .card {
+    width: 350px;
+    height: 300px;
+  }
+  .image img {
+    width: 350px;
+    height: 160px;
+  }
+
+.desp h3 {
+  font-size: .9rem;
+}
+}
+
+@media (max-width: 380px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .headings {
+  display: flex;
+  margin: .5rem 1rem 0.5rem 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+  .profile{
+    font-size: .8rem;
+  }
+
+  .profile img{
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .card {
+    width: 300px;
+    height: 210px;
+  }
+
+  .image{
+      margin: 0 1rem .8rem 1rem;
+  }
+
+  .image img {
+    width: 300px;
+    height: 100px;
+  }
+
+   .desp{
+      margin: 0 1rem;
+  }
+
+  .playButton {
+  padding: .5rem;
+}
+
+.playButton svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.desp h3 {
+  font-size: .8rem;
+}
+}

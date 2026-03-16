@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "profileImage": "profile.png",
+      "username": "IslamicInsights",
+      "timeAgo": "2 hours ago, India",
+      "postImage": "post1.png",
+      "altText": "Advice for Students of Knowledge",
+      "title": "The Striving Of The Salaf for Knowledge and Acting Upon It by Shaikh Abu Zaid Zameer",
+      "views": "43K views",
+      "source": "Amau Academy",
+      "videoId":"iG3sP--gEA4"
+    },
+    {
+      "id": 2,
+      "profileImage": "profile.png",
+      "username": "IslamicInsights",
+      "timeAgo": "5 hours ago, India",
+      "postImage": "post2.png",
+      "altText": "This Surah can change your life",
+      "title": "Life-Changing Lessons From Surah Al-Hujurat by Ustadh Abdulrahman",
+      "views": "25K views",
+      "source": "Amau Academy",
+      "videoId":"DbCXD3mWVjk"
+    }
+  ]
+  

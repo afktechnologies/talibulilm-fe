@@ -1,0 +1,65 @@
+.Wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 5rem;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20%;
+  color: var(--blue);
+}
+
+.mainNav {
+  width: 100%;
+  height: 80%;
+  border: 1px solid var(--grey);
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.mainNav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .mainNav ul li {
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+} */
+
+.tafsirSelectionTab {
+  background-color: var(--light-pink);
+  color: var(--brown);
+  padding: 0.2rem 0.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.mainNav ul li {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    /* Remove cursor: pointer from here */
+  }
+  
+  .mainNav ul a {
+    display: inline-flex; /* Changed from flex to inline-flex */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; /* ✅ Only here */
+  }
+  
+
+.mainNav ul svg {
+  margin: 0 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--grey);
+}

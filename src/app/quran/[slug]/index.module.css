@@ -1,0 +1,22 @@
+.main{
+    background-color: #E2E2DE;
+    padding: 3rem 0 7.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .main{
+    padding: 2rem 0 5.5rem 0;
+}
+}
+
+@media (max-width: 500px) {
+    .main{
+    padding: 2rem 0 3.5rem 0;
+}
+}
+
+@media (max-width: 400px) {
+    .main{
+    padding: 2rem 0 3rem 0;
+}
+}

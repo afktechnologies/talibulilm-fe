@@ -1,0 +1,180 @@
+.wrapper {
+  display: flex;
+  overflow-x: hidden;
+  background-color: white;
+  border-radius: 0 0 20px 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  width: 100%;
+  margin: 2rem 1rem 3rem 1rem;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title h3 {
+  font-size: 1.6rem;
+  color: var(--brown);
+}
+
+.originImg {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+  mix-blend-mode: multiply;
+  margin: 0 1rem;
+}
+
+.titleContainer h1 {
+  font-size: 1.8rem;
+  color: rgba(122, 96, 79, 0.86);
+}
+
+.main {
+  width: 60%;
+  display: block;
+  text-align: justify;
+  padding: 0 1rem;
+  line-height: 2.8rem;
+  font-size: 1.8rem;
+  direction: rtl;
+  font-family: "Lateef", serif;
+}
+
+.ayahWrapper {
+  display: inline;
+}
+
+.ayahText {
+  white-space: normal;
+  word-break: break-word;
+  text-align: right;
+  direction: rtl;
+  display: inline;
+  font-size: 2.25rem;
+  line-height: 1.25;
+}
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.pageNumber {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.diamondWrapper {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #7A604F; 
+}
+
+.diamond {
+  width: 6.5px;
+  height: 6.5px;
+  background-color: #7A604F;
+  transform: rotate(45deg); 
+}
+
+@media (max-width: 1000px) {
+  .main {
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .title h3 {
+    font-size: 1.4rem;
+  }
+
+  .originImg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .titleContainer h1 {
+    font-size: 1.5rem;
+  }
+
+  .main {
+    width: 80%;
+  }
+
+  .ayahText {
+    font-size: 1.8rem;
+  }
+
+  .diamondWrapper{
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  .title h3 {
+    font-size: 1.4rem;
+  }
+
+  .originImg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .main {
+    width: 90%;
+  }
+
+  .ayahText {
+    font-size: 1.6rem;
+  }
+
+  .diamondWrapper{
+    width: 95%;
+  }
+}
+
+@media (max-width: 420px) {
+  .main {
+    width: 95%;
+  }
+
+  /* .ayahText {
+    font-size: 1.5rem;
+  } */
+}

@@ -1,0 +1,331 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  margin-top: 4rem;
+  padding-bottom: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  width: 90%;
+}
+
+.headings {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0;
+}
+
+.svgIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #003845;
+  border-radius: 10px;
+  padding: 3px;
+  background-color: #003845;
+}
+
+.svgIcon svg {
+  color: white;
+  height: 1.6rem;
+  width: 1.6rem;
+}
+
+.headings h2 {
+  font-size: 2rem;
+  color: #003845;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  position: relative;
+  background: #edf1f4;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  margin-top: 3rem;
+  padding: 2rem 3rem;
+  font-family: sans-serif;
+  width: 90%;
+}
+
+.narrator {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  margin-bottom: 8px;
+  margin-right: 2rem;
+}
+
+.text {
+  width: 80%;
+  margin: 1.5rem 0;
+  line-height: 1.5;
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.truncate{
+    display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reference {
+  color: #003049;
+  font-size: 1.2rem;
+  font-weight: lighter;
+}
+
+.reference span {
+  color: #2c7da0;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.ribbon {
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  transform: rotate(8deg);
+  z-index: 2;
+}
+
+.ribbon img {
+  display: block;
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+.card hr {
+  margin: 2rem 0 1rem 0;
+  color: #c2cdd3;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem;
+}
+
+.links a {
+  font-size: 1.2rem;
+  color: #2c7da0;
+  text-decoration: underline;
+}
+
+.icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 3rem;
+}
+
+.icons svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 950px) {
+.ribbon img {
+  width: 120px;
+}
+}
+
+@media (max-width: 850px) {
+  .narrator {
+    font-size: 1.1rem;
+  }
+
+  .text {
+    font-size: 1.1rem;
+  }
+
+  .reference {
+    font-size: 1rem;
+  }
+  .reference span {
+    font-size: 1rem;
+  }
+
+  .links a {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 700px) {
+  .narrator {
+    font-size: 1rem;
+  }
+
+  .text {
+    width: 90%;
+    line-height: 1.2;
+    font-size: 1rem;
+  }
+
+  .reference {
+    font-size: 0.9rem;
+  }
+  .reference span {
+    font-size: 0.9rem;
+  }
+
+  .links a {
+    font-size: 0.9rem;
+  }
+
+  .ribbon {
+  top: -20px;
+  right: -25px;
+}
+
+  .ribbon img {
+  width: 100px;
+}
+}
+
+@media (max-width: 650px) {
+  .headings h2 {
+    font-size: 1.8rem;
+  }
+
+  .icons {
+    gap: 2rem;
+  }
+
+  .icons svg {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+
+    .ribbon img {
+  width: 90px;
+}
+}
+
+@media (max-width: 500px) {
+  .narrator {
+    font-size: .9rem;
+  }
+
+  .text {
+    width: 100%;
+    font-size: .9rem;
+  }
+
+  .reference {
+    font-size: 0.8rem;
+  }
+  .reference span {
+    font-size: 0.8rem;
+  }
+
+  .links a {
+    font-size: 0.8rem;
+  }
+
+      .ribbon {
+  top: -15px;
+  right: -25px;
+}
+
+    .icons {
+    gap: 1.2rem;
+  }
+
+  .icons svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+
+}
+
+@media (max-width: 420px) {
+
+  .card {
+  padding: 2rem;
+  font-family: sans-serif;
+  width: 95%;
+}
+  .narrator {
+    font-size: .8rem;
+  }
+
+  .text {
+    width: 100%;
+    font-size: .8rem;
+  }
+
+  .reference {
+    font-size: 0.7rem;
+  }
+  .reference span {
+    font-size: 0.7rem;
+  }
+
+  .links a {
+    font-size: 0.7rem;
+  }
+
+
+
+  .ribbon img {
+  width: 90px;
+}
+}
+
+@media (max-width: 350px) {
+  .headings {
+    gap: 1rem;
+  }
+
+  .svgIcon {
+    width: 2rem;
+    height: 2rem;
+    padding: 3px;
+  }
+
+  .svgIcon svg {
+    height: 1.3rem;
+    width: 1.3rem;
+  }
+  .headings h2 {
+    font-size: 1.5rem;
+  }
+
+    .card {
+  padding: 1.5rem;
+  font-family: sans-serif;
+  width: 95%;
+}
+  .ribbon {
+  top: -15px;
+  right: -20px;
+}
+
+  .ribbon img {
+  width: 80px;
+}
+}

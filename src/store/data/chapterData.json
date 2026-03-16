@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": {
+      "english": "Chapter 1: How the Divine Revelation started being revealed to Allah's Messenger",
+      "arabic": "باب كَيْفَ كَانَ بَدْءُ الْوَحْىِ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم (1)"
+    },
+    "detail": {
+      "english": "And the Statement of Allah جَلَّ ذِكْرُهُ: \"Verily, We have sent the revelation to you (O Muhammad ﷺ) as We sent the revelation to Noah and the Prophets after him.\" (V.4:163)",
+      "arabic": "\"وَقَوْلُ اللَّهِ جَلَّ ذِكْرُهُ: إِنَّا أَوْحَيْنَا إِلَيْكَ كَمَاأَوْحَيْنَا إِلَى نُوحٍ وَالنَّبِيِّينَ مِنْ بَعْدِهِ \""
+    },
+    "narration": {
+      "english": {
+        "narrator": "Narrated 'Umar bin Al-Khattab:",
+        "text": "I heard Allah's Messenger (ﷺ) saying, \"The reward of deeds depends upon the intentions...\"",
+        "reference": "Sahih al-Bukhari 1"
+      },
+      "arabic": {
+        "chain": "حَدَّثَنَا الْحُمَيْدِيُّ عَبْدُ اللَّهِ بْنُ الزُّبَيْرِ ...",
+        "text": "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ ..."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "title": {
+      "english": "Chapter 2: Belief in the Oneness of Allah",
+      "arabic": "باب الإيمان بوحدانية الله"
+    },
+    "detail": {
+      "english": "Allah is One, without any partners.",
+      "arabic": "الله واحد لا شريك له"
+    },
+    "narration": {
+      "english": {
+        "narrator": "Narrated Abu Huraira:",
+        "text": "The Messenger of Allah (ﷺ) said, \"Allah has ninety-nine names...\"",
+        "reference": "Sahih Muslim 2677"
+      },
+      "arabic": {
+        "chain": "حَدَّثَنَا أَبُو هُرَيْرَةَ ...",
+        "text": "لِلَّهِ تِسْعَةٌ وَتِسْعُونَ اسْمًا..."
+      }
+    }
+  }
+]

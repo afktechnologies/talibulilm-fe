@@ -1,0 +1,125 @@
+.Wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.Container {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main h2 {
+  font-size: 3rem;
+  color: var(--dark-grey);
+}
+
+.main p {
+  color: var(--blue);
+}
+
+.main p span {
+  color: var(--dark-grey);
+  font-size: 1.1rem;
+}
+
+.formContainer{
+  position: relative;
+  border: 1px solid #ccc;
+  padding: 2rem;
+  margin: 5rem .5rem 2rem .5rem;
+  border-radius: 4px;
+  background: white;
+}
+
+.title {
+  position: absolute;
+  top: -1.75rem;
+  left: 5rem;
+  background: white;
+  padding: 0 0.5rem;
+  color: var(--yellow); /* golden shade */
+  z-index: 1;
+  font-size: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  margin-bottom: 0.25rem;
+  color: var(--grey);
+  font-size: 1.5rem;
+}
+
+.inputGroup input {
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent;
+  outline: none;
+  font-size: 1.5rem;
+  color: var(--green);
+}
+
+.inputGroup input::placeholder {
+    color: var(--light-grey); 
+    font-size: 1.2rem; 
+  }
+
+.inputGroup p {
+    color: var(--brown);
+    font-size: 1.8rem;
+    margin-top: 0.3rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 48rem) {
+    .main h2 {
+      font-size: 1.5rem;
+    }
+    
+    .main p span {
+      font-size: 1rem;
+    }
+    
+    .formContainer{
+      padding:.5rem;
+      margin: 5rem 1rem 0 1rem;
+    }
+    
+    .title {
+      top: -1rem;
+      left: 1.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .inputGroup label {
+      font-size: 1rem;
+    }
+    
+    .inputGroup input {
+      font-size: 1rem;
+    }
+    
+    .inputGroup input::placeholder {
+        font-size: 1rem; 
+      }
+    
+    .inputGroup p {
+        font-size: 1.8rem;
+      }
+    
+  }

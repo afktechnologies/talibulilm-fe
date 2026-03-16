@@ -1,0 +1,79 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.heroImage {
+  background-image: url(../../../../public/Images/supplicationsHero.png);
+  height: 25rem;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 3rem;
+  /* text-align: center; */
+  width: 65%;
+  max-width: 1200px;
+  color: white;
+  gap: 1.5rem;
+  color: #5c6357;
+}
+
+.content h2 {
+  /* letter-spacing: 0.03em; */
+  font-size: 1.5rem;
+  font-weight: lighter;
+}
+
+.content h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.content p {
+  letter-spacing: 0.1rem;
+  font-size: 1.1rem;
+  font-weight: light;
+}
+
+@media (max-width: 973px) {
+  .content {
+    margin-top: 6rem;
+    width: 80%;
+  }
+  .content h2 {
+    letter-spacing: 0;
+    font-size: 1.8rem;
+  }
+
+  .content h3 {
+    letter-spacing: 0;
+    font-size: 1rem;
+  }
+
+  .content p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .content h3 {
+    font-size: 0.9rem;
+  }
+}

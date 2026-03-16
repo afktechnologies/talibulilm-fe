@@ -1,0 +1,78 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.heroImage {
+  background-image: url(../../../../public/Images//HadithPageBG.png);
+  height: 30rem;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  width: 50%;
+  color: white;
+  margin-bottom: 4rem;
+  gap: 1rem;
+  color: #003845;
+}
+
+.content h3 {
+  letter-spacing: 0.1rem;
+  font-size: 1.9rem;
+  font-weight: bold;
+}
+
+@media (max-width: 855px) {
+  .content {
+    margin-right: 0;
+  }
+  .content h3 {
+    letter-spacing: 0;
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .content {
+    width: 80%;
+  }
+  .content h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .content {
+    margin-bottom: 10rem;
+    width: 80%;
+  }
+  .content h3 {
+    font-size: 1.3rem;
+  }
+}

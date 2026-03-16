@@ -1,0 +1,30 @@
+{
+  "sahih-al-bukhari": {
+    "arabicText": "صحيح البخاري",
+    "englishTitle": "Sahih al-Bukhari"
+  },
+  "sahih-muslim": {
+    "arabicText": "صحيح مسلم",
+    "englishTitle": "Sahih Muslim"
+  },
+  "sunan-an-nasai": {
+    "arabicText": "سنن النسائي",
+    "englishTitle": "Sunan an-Nasa'i"
+  },
+  "sunan-abi-dawud": {
+    "arabicText": "سنن أبي داود",
+    "englishTitle": "Sunan Abi Dawud"
+  },
+  "jami-at-tirmidhi": {
+    "arabicText": "جامع الترمذي",
+    "englishTitle": "Jami` at-Tirmidhi"
+  },
+  "sunan-ibn-majah": {
+    "arabicText": "سنن ابن ماجه",
+    "englishTitle": "Sunan Ibn Majah"
+  },
+  "musnad-ahmad": {
+    "arabicText": "مسند أحمد",
+    "englishTitle": "Musnad Ahmad"
+  }
+}

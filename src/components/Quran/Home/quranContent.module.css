@@ -1,0 +1,171 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  margin: 0 1rem 4rem 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1440px;
+  width: 90%;
+  gap: 1.5rem;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0 2rem;
+}
+
+.navigationBtn ul {
+  display: flex;
+  gap: 2rem;
+}
+
+.active {
+  font-weight: bold;
+  color: var(--dark-grey); 
+}
+
+.navItem {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: var(--grey);
+}
+.navItem:hover {
+  color: var(--dark-grey);
+  text-decoration: underline;
+  transition: 0.2s ease-in-out;
+}
+
+.active {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--dark-grey);
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+}
+
+.contentGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.tabTransition {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+
+@media (max-width: 1000px) {
+  .contentGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .main {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 1080px) {
+  .container {
+    margin: 0;
+  }
+
+  .navigationBtn ul {
+    gap: 1.5rem;
+  }
+  .navItem {
+    font-size: 1.2rem;
+  }
+
+  .active {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 973px) {
+  .navItem {
+    font-size: 1.1rem;
+  }
+
+  .active {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .navItem {
+    font-size: 1rem;
+  }
+
+  .active {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .navigationBtn ul {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container{
+    gap: 1rem;
+  }
+  .navigationBtn {
+    margin-left: 1rem;
+  }
+
+  .navigationBtn ul{
+    gap: 2rem; 
+  }
+
+  .navItem {
+    font-size: 1.2rem;
+  }
+  .active {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+    .navItem {
+    font-size: 1.1rem;
+  }
+  .active {
+    font-size: 1.1rem;
+  }
+}
