@@ -54,7 +54,7 @@ const DonationComponent = () => {
           </div>
 
           {/* Stats row */}
-          <div className={styles.stats}>
+          {/* <div className={styles.stats}>
             <div className={styles.statItem}>
               <span className={`${styles.statNumber} ${primary_font.className}`}>5K+</span>
               <span className={`${styles.statLabel} ${roboto.className}`}>Supporters</span>
@@ -69,10 +69,10 @@ const DonationComponent = () => {
               <span className={`${styles.statNumber} ${primary_font.className}`}>30+</span>
               <span className={`${styles.statLabel} ${roboto.className}`}>Scholars</span>
             </div>
-          </div>
+          </div> */}
 
           <Link
-            href="/donation"
+            href="/support-us"
             className={`${styles.btn} ${roboto.className}`}
           >
             <span>Help &amp; Donate Us Now</span>

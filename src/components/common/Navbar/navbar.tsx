@@ -25,6 +25,7 @@ const NavLink: React.FC<NavLinksProps> = ({ pageActive }) => {
     { name: "QnA", link: "/qna", key: "qna" },
     { name: "Articles", link: "/articles", key: "articles" },
     { name: "Zakat Calculator", link: "/zakat-calculator", key: "zakat-calculator" },
+    { name: "Support Us", link: "/support-us", key: "support-us" },
   ];
 
   return (

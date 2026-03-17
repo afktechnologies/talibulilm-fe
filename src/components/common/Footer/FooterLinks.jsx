@@ -28,7 +28,7 @@ const FooterLinks = () => {
     },
     { name: "Hadith", link: "/hadith", key: "hadith" },
     { name: "Scholars", link: "/scholars", key: "scholars" },
-    { name: "Donation", link: "/donation", key: "prayer-time" },
+    { name: "Support Us", link: "/support-us", key: "donation" },
   ];
 
   const linksRight = [

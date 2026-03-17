@@ -98,6 +98,30 @@ export default function DonationPage() {
               color: "#e3f2fd",
               accent: "#1565c0",
             },
+            {
+              title: "Scholars",
+              icon: "scholar-icon.png",
+              desp: "The great Scholars of Islam are enlisted ",
+              num: "04",
+             color: "#e8f5e9",
+              accent: "#2e7d32",
+            },
+            {
+              title: "QnA",
+              icon: "QnA.png",
+              desp: "QnA Sessions are incoporated with Salaf Scholars",
+              num: "05",
+             color: "#fff8e1",
+              accent: "#f57f17",
+            },
+            {
+              title: "Digital Books",
+              icon: "digital-book-icon.png",
+              desp: "Digital Islamic Books now available in every hands",
+              num: "06",
+              color: "#e3f2fd",
+              accent: "#1565c0",
+            },
           ].map((item) => (
             <div key={item.title} className={styles.milestoneCard}>
               <div className={styles.milestoneNumTag}>{item.num}</div>
@@ -155,7 +179,7 @@ export default function DonationPage() {
             </p>
 
             {/* Impact stats row */}
-            <div className={styles.supportStats}>
+            {/* <div className={styles.supportStats}>
               {[
                 { val: "10K+", label: "Monthly Readers" },
                 { val: "500+", label: "Resources" },
@@ -166,7 +190,7 @@ export default function DonationPage() {
                   <span className={styles.supportStatLabel}>{s.label}</span>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           <div className={styles.supportRight}>
