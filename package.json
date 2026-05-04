@@ -14,12 +14,14 @@
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
     "@reduxjs/toolkit": "^2.9.0",
+    "@tailwindcss/postcss": "^4.2.4",
     "@tanstack/react-query": "^5.83.0",
     "framer-motion": "^12.23.12",
     "ky": "^1.8.2",
     "motion": "^12.23.12",
     "next": "^15.4.10",
     "num-to-arabic": "^0.0.3",
+    "postcss": "^8.5.13",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-haiku": "^2.4.1",
@@ -28,7 +30,8 @@
     "react-redux": "^9.2.0",
     "react-share": "^5.2.2",
     "redux-persist": "^6.0.0",
-    "swiper": "^11.2.4"
+    "swiper": "^11.2.4",
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

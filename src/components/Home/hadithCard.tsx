@@ -72,13 +72,13 @@ const DailyHadithCard: React.FC<DailyCardProps> = ({
         </div>
 
         <div className={styles.content}>
-          <Link
+          {/* <Link
             href={`/hadith/${HadithData?.hadithCollection?.hadithBook?.slug}/${HadithData?.collectionId}`}
-          >
+          > */}
             <h5 className={`${primary_font.className} ${styles.truncate}`}>
               {HadithData?.bodyEn}
             </h5>
-          </Link>
+          {/* </Link> */}
           {HadithData?.grade && (
             <p className={primary_font.className}>Grade: {HadithData.grade}</p>
           )}

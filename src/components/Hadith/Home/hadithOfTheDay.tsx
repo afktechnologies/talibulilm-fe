@@ -137,9 +137,9 @@ Grade: ${hadith.grade}
         <div className={styles.cardContainer}>
           <div className={`${roboto.className} ${styles.card}`}>
             <div className={styles.cardContent}>
-              <Link
+              {/* <Link
                 href={`/hadith/${hadith?.hadithCollection?.hadithBook?.slug}/${hadith?.collectionId}`}
-              >
+              > */}
                 <div className={styles.ribbon}>
                   <Image src={ribbon} alt="Ribbon" width={120} height={30} />
                 </div>
@@ -162,7 +162,7 @@ Grade: ${hadith.grade}
                   </p>
                 )}
                 <hr />
-              </Link>
+              {/* </Link> */}
             </div>
             <div className={styles.links}>
               <div></div>
