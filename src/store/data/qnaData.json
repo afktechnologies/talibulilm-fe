@@ -1,0 +1,170 @@
+{
+  "categories": [
+    { "id": "all",       "label": "All Questions" },
+    { "id": "fiqh",      "label": "Fiqh & Worship" },
+    { "id": "aqeedah",   "label": "Aqeedah" },
+    { "id": "quran",     "label": "Quran" },
+    { "id": "hadith",    "label": "Hadith" },
+    { "id": "family",    "label": "Family & Marriage" },
+    { "id": "character", "label": "Character & Morals" }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "number": "Q001",
+      "category": "fiqh",
+      "categoryLabel": "Fiqh & Worship",
+      "question": "Is it permissible to combine Dhuhr and Asr prayers when travelling?",
+      "summary": "Combining Dhuhr with Asr during travel is permissible and established in the Sunnah, subject to the conditions of a qualifying journey.",
+      "answer": [
+        {
+          "heading": null,
+          "text": "Yes, combining Dhuhr with Asr, and Maghrib with Isha, during travel is established in the authentic Sunnah of the Prophet ﷺ. Ibn Abbaas (may Allah be pleased with him) reported that the Prophet ﷺ combined prayers when travelling."
+        },
+        {
+          "heading": "Conditions for combining prayers",
+          "text": "The journey must qualify as safar — most scholars set the minimum distance at approximately 80 km. The combination may be done at the time of the first prayer (jam' taqdeem) or delayed to the time of the second prayer (jam' ta'kheer), whichever is more convenient for the traveller."
+        },
+        {
+          "heading": "Evidence",
+          "text": "Muaadh ibn Jabal reported: \"When the Prophet ﷺ set out before the sun had passed the meridian, he would delay Dhuhr until he combined it with Asr, praying them together.\" (Abu Dawud 1220). This hadith is the basis for the permissibility of jam' taqdeem while travelling."
+        }
+      ],
+      "references": ["Sahih Muslim 703", "Abu Dawud 1220"],
+      "date": "14 Rabi al-Awwal 1446",
+      "views": 8420
+    },
+    {
+      "id": 2,
+      "number": "Q002",
+      "category": "aqeedah",
+      "categoryLabel": "Aqeedah",
+      "question": "What is the meaning of Tawakkul (reliance on Allah) and how is it practised correctly?",
+      "summary": "Tawakkul is complete trust in Allah after taking the available means. It is not passivity — the Prophet ﷺ said: 'Tie your camel, then put your trust in Allah.'",
+      "answer": [
+        {
+          "heading": null,
+          "text": "Tawakkul (توكل) is one of the highest stations of faith. It means entrusting one's affairs entirely to Allah after having taken the permissible and available means. Ibn Rajab al-Hanbali defined it as sincere reliance on Allah in obtaining what is beneficial and warding off what is harmful."
+        },
+        {
+          "heading": "Tawakkul does not mean abandoning means",
+          "text": "A common misunderstanding is that tawakkul means leaving aside worldly effort. This contradicts the Sunnah. Anas ibn Maalik reported that a man asked the Prophet ﷺ: 'Shall I tie my camel and then put my trust in Allah, or shall I leave it untied?' He said: 'Tie it, then put your trust in Allah.' (Tirmidhi 2517)"
+        },
+        {
+          "heading": "The Quranic basis",
+          "text": "Allah says (interpretation of the meaning): 'And whoever relies upon Allah — then He is sufficient for him. Indeed, Allah will accomplish His purpose.' (al-Talaaq 65:3). The one who truly relies on Allah is not anxious about the outcome, knowing that Allah's decree is perfect."
+        }
+      ],
+      "references": ["Tirmidhi 2517", "Quran 65:3", "Ibn Rajab, Jami al-Uloom wal-Hikam"],
+      "date": "2 Safar 1446",
+      "views": 6150
+    },
+    {
+      "id": 3,
+      "number": "Q003",
+      "category": "quran",
+      "categoryLabel": "Quran",
+      "question": "What is the ruling on reciting the Quran without proper Tajweed?",
+      "summary": "Scholars distinguish between errors that change the meaning (impermissible deliberately) and subtle pronunciation errors. One who recites with effort and difficulty receives a double reward.",
+      "answer": [
+        {
+          "heading": null,
+          "text": "Scholars have divided errors in Quranic recitation into two categories. The first is lahn jalee (لحن جلي) — clear errors that alter the meaning. Committing these deliberately is forbidden. The second is lahn khafi (لحن خفي) — subtle errors in tajweed rules that do not change the meaning. These are disliked but do not reach prohibition."
+        },
+        {
+          "heading": "The person who struggles to recite",
+          "text": "The Prophet ﷺ said: 'The one who recites the Quran proficiently will be with the noble scribes (angels), and the one who recites with difficulty, stammering through its verses, will have a double reward.' (Sahih Bukhari 4937). This hadith demonstrates that struggling with recitation is not a sin — it is rewarded."
+        },
+        {
+          "heading": "Is learning tajweed obligatory?",
+          "text": "The scholars say that learning enough tajweed to avoid clear errors is an individual obligation (fard 'ayn), while mastering the full science is a communal obligation (fard kifayah). Every Muslim should seek a qualified teacher to improve their recitation."
+        }
+      ],
+      "references": ["Sahih Bukhari 4937", "Sahih Muslim 798", "Ibn al-Jazari, al-Nashr"],
+      "date": "18 Muharram 1446",
+      "views": 11200
+    },
+    {
+      "id": 4,
+      "number": "Q004",
+      "category": "family",
+      "categoryLabel": "Family & Marriage",
+      "question": "What financial obligations does a husband have towards his wife in Islam?",
+      "summary": "A husband is obligated to provide his wife with food, clothing, and suitable accommodation according to his ability. This right is called nafaqah and is established in the Quran.",
+      "answer": [
+        {
+          "heading": null,
+          "text": "Nafaqah (النفقة) — financial maintenance of a wife — is an obligation upon the husband established clearly in the Quran. Allah says: 'Let the man of means spend according to his means. And the man whose provision is restricted — let him spend from what Allah has given him.' (al-Talaaq 65:7)"
+        },
+        {
+          "heading": "What is included",
+          "text": "Nafaqah includes: food and drink sufficient for her needs; clothing appropriate to the season and her customary standard; suitable and secure housing; and, according to many scholars, medical care and household necessities. The standard is what is considered reasonable (ma'roof) in her social context — neither luxury nor hardship."
+        },
+        {
+          "heading": "Duration of the obligation",
+          "text": "The obligation begins upon the conclusion of a valid marriage contract. It continues throughout the marriage and, according to the majority of scholars, during the 'iddah following a revocable divorce. After a final divorce, only a pregnant wife retains the right to maintenance."
+        }
+      ],
+      "references": ["Quran 65:6-7", "Quran 2:233", "Ibn Qudamah, al-Mughni 9/218"],
+      "date": "5 Dhul Qa'dah 1445",
+      "views": 9300
+    },
+    {
+      "id": 5,
+      "number": "Q005",
+      "category": "character",
+      "categoryLabel": "Character & Morals",
+      "question": "How does Islam guide us to deal with anger?",
+      "summary": "The Prophet ﷺ gave specific practical guidance: seek refuge in Allah, change your physical position, and make wudhu. Restraining anger is described in the Quran as a quality of the people of Paradise.",
+      "answer": [
+        {
+          "heading": null,
+          "text": "Anger is a natural human emotion and Islam does not ask us to eliminate it. Rather, it guides us to channel and restrain it. The Prophet ﷺ said: 'The strong man is not the one who can overpower others. The strong man is the one who controls himself when angry.' (Sahih Bukhari 6114)"
+        },
+        {
+          "heading": "Practical steps from the Sunnah",
+          "text": "The Prophet ﷺ gave specific, tested advice: (1) Say A'udhu billahi min al-Shaytaan il-rajeem. (2) If standing, sit down; if sitting, lie down. (3) Make wudhu, as the Prophet ﷺ said: 'Anger comes from Shaytan, Shaytan is created from fire, and fire is extinguished by water — so if one of you becomes angry, let him make wudhu.' (Abu Dawud 4784)"
+        },
+        {
+          "heading": "The virtue of restraining anger",
+          "text": "Allah says: '...those who restrain anger and who pardon the people — and Allah loves the doers of good.' (Aal Imraan 3:134). Restraining anger is therefore one of the qualities of the people of Paradise explicitly mentioned in the Quran."
+        }
+      ],
+      "references": ["Sahih Bukhari 6114", "Abu Dawud 4784", "Quran 3:133-134"],
+      "date": "22 Shawwal 1445",
+      "views": 7800
+    },
+    {
+      "id": 6,
+      "number": "Q006",
+      "category": "hadith",
+      "categoryLabel": "Hadith",
+      "question": "What is the difference between a Sahih and a Hasan hadith?",
+      "summary": "Both grades are accepted as evidence in Islamic law. The distinction lies in the precision of memory (dabt) of the narrators: Sahih narrators have complete precision, Hasan narrators have slightly less.",
+      "answer": [
+        {
+          "heading": null,
+          "text": "Hadith scholars have established strict criteria for grading narrations. The two most important accepted grades are Sahih (sound) and Hasan (good). Ibn Hajar al-Asqalani defined them precisely in Nukhbat al-Fikar."
+        },
+        {
+          "heading": "The Sahih hadith",
+          "text": "A Sahih hadith requires: (1) a continuous unbroken chain; (2) every narrator being upright and trustworthy ('adl); (3) every narrator having precise memory (dabt taamm); (4) freedom from hidden irregularity (shudhudh); (5) freedom from concealed defects ('illah). The two Sahihayn — Bukhari and Muslim — represent the highest standard."
+        },
+        {
+          "heading": "The Hasan hadith",
+          "text": "A Hasan hadith meets all the same conditions except that one or more narrators have slightly lower precision of memory (dabt khafif). They are fully trustworthy and honest, but not at the peak level. Both Sahih and Hasan are used as legal evidence (hujjah) by scholars of all four major madhabs."
+        }
+      ],
+      "references": ["Ibn Hajar, Nukhbat al-Fikar", "al-Nawawi, al-Taqreeb", "al-Suyuti, Tadreeb al-Rawi"],
+      "date": "10 Shawwal 1445",
+      "views": 5600
+    }
+  ],
+  "popularQuestions": [
+    { "id": 3, "number": "Q003", "question": "What is the ruling on reciting the Quran without proper Tajweed?", "views": 11200 },
+    { "id": 4, "number": "Q004", "question": "What financial obligations does a husband have towards his wife?", "views": 9300 },
+    { "id": 1, "number": "Q001", "question": "Is it permissible to combine Dhuhr and Asr when travelling?", "views": 8420 },
+    { "id": 5, "number": "Q005", "question": "How does Islam guide us to deal with anger?", "views": 7800 },
+    { "id": 2, "number": "Q002", "question": "What is Tawakkul and how is it practised correctly?", "views": 6150 }
+  ]
+}
