@@ -2,7 +2,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import "swiper/css";
-import styles from "./dailyHadith.module.css";
 import DailyHadithCard from "./hadithCard";
 import { primary_font } from "@/app/font/font";
 import { useHadithsRandom } from "@/services/hooks/hadith";
@@ -22,11 +21,15 @@ const DailyHadith: React.FC<DailyHadithProps> = ({ limit = 4 }) => {
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
 
+  const titleClass = "flex flex-col items-center justify-center gap-3 tracking-[0.12em] text-center mb-8 text-[1.8rem] text-[#5C6357] max-[890px]:text-[1.5rem] max-[790px]:text-[1.3rem]";
+  const navWrapperClass = "flex items-center gap-4 max-[400px]:gap-2";
+  const navBtnClass = "flex justify-center items-center bg-transparent border-none w-[40px] h-[40px] text-[#0080b9] cursor-pointer transition-[transform,color] duration-200 ease-in-out hover:scale-[1.15] hover:text-[#005f87] max-[790px]:w-[30px] max-[790px]:h-[30px] [&>svg]:w-full [&>svg]:h-full";
+
   if (isError)
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <h1 className={`${styles.title} ${primary_font.className}`}>
+      <div className="flex justify-center items-center w-full py-8 px-4">
+        <div className="max-w-[1440px] w-full">
+          <h1 className={`${titleClass} ${primary_font.className}`}>
             Hadith Of The Day
           </h1>
           <FallbackError />
@@ -35,8 +38,8 @@ const DailyHadith: React.FC<DailyHadithProps> = ({ limit = 4 }) => {
     );
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
+    <div className="flex justify-center items-center w-full py-8 px-4">
+      <div className="max-w-[1440px] w-full">
         {/* <h1 className={`${styles.title} ${primary_font.className}`}>
           Hadith Of The Day
         </h1>
@@ -51,13 +54,13 @@ const DailyHadith: React.FC<DailyHadithProps> = ({ limit = 4 }) => {
           </button>
         </div> */}
 
-        <h1 className={`${styles.title} ${primary_font.className}`}>
+        <h1 className={`${titleClass} ${primary_font.className}`}>
   Hadith Of The Day
-  <span className={styles.navWrapper}>
-    <button ref={prevRef} className={styles.navBtn}>
+  <span className={navWrapperClass}>
+    <button ref={prevRef} className={navBtnClass}>
       < LiaLongArrowAltLeftSolid/>
     </button>
-    <button ref={nextRef} className={styles.navBtn}>
+    <button ref={nextRef} className={navBtnClass}>
       <LiaLongArrowAltRightSolid />
     </button>
   </span>
@@ -93,7 +96,7 @@ const DailyHadith: React.FC<DailyHadithProps> = ({ limit = 4 }) => {
             1200: { slidesPerView: 2.75 },
             1300: { slidesPerView: 3 },
           }}
-          className={styles.swiper}
+          className="py-4 px-12 max-[360px]:px-10"
         >
           {hadithList.map((hadith: HadithItemList, index: number) => (
             <SwiperSlide key={index}>

@@ -65,7 +65,6 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import styles from "./breadcrumb.module.css";
 import { roboto } from "@/app/font/font";
 import { usePathname } from "next/navigation";
 
@@ -106,11 +105,11 @@ export default function Breadcrumb({ collectionName }: BreadcrumbProps) {
       : []),
   ].map((crumb, index, arr) =>
     index === arr.length - 1 ? (
-      <Typography key={index} className={styles.typography}>
+      <Typography key={index}>
         {crumb.label}
       </Typography>
     ) : (
-      <Link underline="hover" key={index} href={crumb.href} className={styles.link}>
+      <Link underline="hover" key={index} href={crumb.href} className="no-underline text-[#1c3d3d] hover:underline">
         {crumb.label}
       </Link>
     )
@@ -120,7 +119,7 @@ export default function Breadcrumb({ collectionName }: BreadcrumbProps) {
     <Breadcrumbs
       separator={<NavigateNextIcon fontSize="small" />}
       aria-label="breadcrumb"
-      className={`${styles.breadcrumb} ${roboto.className}`}
+      className={`${roboto.className} flex items-center justify-center gap-2 text-[1.2rem] text-[#1c3d3d] [&_.MuiTypography-root]:flex [&_.MuiTypography-root]:items-center [&_.MuiTypography-root]:justify-center [&_.MuiTypography-root]:text-[1.2rem] [&_.MuiBreadcrumbs-ol]:justify-center [&_.MuiSvgIcon-root]:text-[1rem] max-[768px]:[&_.MuiTypography-root]:text-[1rem] max-[768px]:[&_.MuiSvgIcon-root]:text-[0.8rem] max-[520px]:[&_.MuiTypography-root]:text-[0.8rem] max-[395px]:[&_.MuiSvgIcon-root]:w-[0.8em] max-[395px]:[&_.MuiSvgIcon-root]:h-[0.8em] max-[395px]:[&_.MuiSvgIcon-root]:text-[0.7rem] max-[395px]:[&_.MuiBreadcrumbs-separator]:ml-[4px] max-[395px]:[&_.MuiBreadcrumbs-separator]:mr-[4px] max-[360px]:[&_.MuiSvgIcon-root]:text-[0.6rem] max-[360px]:[&_.MuiBreadcrumbs-separator]:ml-[3px] max-[360px]:[&_.MuiBreadcrumbs-separator]:mr-[3px] max-[360px]:[&_.MuiTypography-root]:text-[0.7rem]`}
     >
       {breadcrumbs}
     </Breadcrumbs>

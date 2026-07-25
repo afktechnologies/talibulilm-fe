@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./skeleton.module.css";
 
 interface CircleProps {
   size?: number | string; // width & height (default: 40px)
@@ -15,7 +14,7 @@ const Circle: React.FC<CircleProps> = ({ size = "40px", className = "" }) => {
     borderRadius: "50%",
   };
 
-  return <div className={`${styles.skeleton} ${className}`} style={style}></div>;
+  return <div className={`inline-block bg-[linear-gradient(90deg,#ececec_25%,#f5f5f5_50%,#ececec_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_linear_infinite] ${className}`} style={style}></div>;
 };
 
 export default Circle;

@@ -4,8 +4,18 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import styles from "./faq.module.css";
 import { useState } from "react";
+
+const fq = {
+  wrapper: "flex justify-center mb-12",
+  container: "w-full max-w-[1440px] flex flex-col items-center",
+  head: "w-full my-4",
+  title: "text-[3rem] text-[#5C6357] mx-2 max-md:text-[2rem]",
+  main: "w-full",
+  accordion: "py-1 my-3",
+  summary: "font-semibold text-[1.2rem] text-[#5C6357] max-md:text-[0.9rem]",
+  details: "text-[1.1rem] w-[95%] max-md:text-[0.8rem]",
+};
 
 interface FAQItem {
   question: string;
@@ -63,33 +73,33 @@ const FAQ = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.head}>
-          <h3 className={`${primary_font.className} ${styles.title}`}>FAQ&apos;s</h3>
+    <div className={fq.wrapper}>
+      <div className={fq.container}>
+        <div className={fq.head}>
+          <h3 className={`${primary_font.className} ${fq.title}`}>FAQ&apos;s</h3>
         </div>
-        <div className={styles.main}>
+        <div className={fq.main}>
           {staticFaqData.map((item, index) => (
             <Accordion
               key={index}
               expanded={expanded === index}
               onChange={() => handleChange(index)}
-              className={styles.accordion}
+              className={fq.accordion}
               sx={{
-                borderRadius: "1rem", 
-                overflow: "hidden",  
+                borderRadius: "1rem",
+                overflow: "hidden",
                 border: "1px solid var(--grey)",
               }}
             >
               <AccordionSummary
-                className={`${styles.summary} ${primary_font.className}`}
+                className={`${fq.summary} ${primary_font.className}`}
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`panel${index}-content`}
                 id={`panel${index}-header`}
               >
                 {item.question}
               </AccordionSummary>
-              <AccordionDetails className={`${styles.details} ${roboto.className}`}>
+              <AccordionDetails className={`${fq.details} ${roboto.className}`}>
                 {item.answer}
               </AccordionDetails>
             </Accordion>

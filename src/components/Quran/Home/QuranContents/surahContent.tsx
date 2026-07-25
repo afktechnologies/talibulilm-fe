@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "../quranContent.module.css";
 import Link from "next/link";
 import SurahCard from "../Cards/surahCard";
 import { useSurahs } from "@/services/hooks/quran";
@@ -59,7 +58,7 @@ const SurahContent = ({ searchQuery, onResultsChange }: SurahContentProps) => {
     );
 
   return (
-    <div className={styles.contentGrid}>
+    <div className="w-[95%] grid grid-cols-1 gap-6 mt-4 max-[1000px]:grid-cols-2 max-[1000px]:gap-4 max-[600px]:grid-cols-1 max-[600px]:gap-4">
       {filteredData.map((item) => (
         <Link href={`/quran/${item.slug}`} key={item.surahNumber}>
           <SurahCard item={item} />

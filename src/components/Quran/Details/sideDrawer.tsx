@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import styles from "./sideDrawer.module.css";
 import { primary_font, roboto } from "@/app/font/font";
 import { JuzList } from "@/types/surah";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -21,9 +20,26 @@ interface SideDrawerProps {
   initialVerse: string | null;
 }
 
+const sd = {
+  overlay: "fixed top-0 left-0 w-full h-screen bg-[rgba(0,0,0,0.5)] opacity-100 visible transition-all duration-300 ease-in-out z-[1099]",
+  drawer: "fixed top-0 right-0 w-[80%] max-w-[400px] h-screen bg-white border-l border-[#7D887A] transition-[right] duration-300 ease-in-out z-[1100] flex flex-col md:hidden",
+  nav: "flex-1 flex flex-col h-full overflow-hidden",
+  headers: "py-[0.8rem] px-4 bg-[#f4e8c7] text-[#7a604f]",
+  headersH4: "font-bold text-[1.2rem]",
+  juzName: "font-bold text-[1.2rem] text-black",
+  menuList: "flex flex-col items-center flex-1 overflow-y-auto p-4",
+  customDropdown: "flex flex-col justify-center items-center w-full cursor-pointer mb-2",
+  dropdownHeader: "flex justify-around items-center font-bold gap-4",
+  dropdownList: "max-h-[300px] w-[90%] overflow-y-auto mt-2 rounded-[0.3rem]",
+  dropdownItem: "border border-[rgba(198,158,48,0.8)] bg-white rounded-[10px] p-2 my-4 mx-2 cursor-pointer hover:bg-[#f9f9f9] max-[450px]:text-[0.9rem] max-[450px]:m-2 max-[335px]:text-[0.8rem]",
+  activeItem: "bg-[#f4e8c7] font-bold",
+  disabled: "p-2 text-[#888]",
+  close: "flex justify-end",
+  closeSpan: "flex justify-center items-center w-5 h-5",
+};
+
 const SideDrawerQuran: React.FC<SideDrawerProps> = ({
   setIsOpen,
-  isOpen,
   juzData,
   isJuzPending,
   juzList,
@@ -87,17 +103,17 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
 
   return (
     <div
-      className={`${styles.overlay} ${isOpen ? styles.show : ""}`}
+      className={sd.overlay}
       onClick={() => setIsOpen(false)}
     >
       <div
-        className={`${styles.drawer} ${isOpen ? styles.open : ""}`}
+        className={sd.drawer}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.nav}>
-          <div className={styles.headers}>
-            <div onClick={() => setIsOpen(false)} className={styles.close}><span><IoMdClose /></span></div>
-            <h4 className={primary_font.className}>
+        <div className={sd.nav}>
+          <div className={sd.headers}>
+            <div onClick={() => setIsOpen(false)} className={sd.close}><span className={sd.closeSpan}><IoMdClose className="w-full h-full" /></span></div>
+            <h4 className={`${primary_font.className} ${sd.headersH4}`}>
               سورة {juzData.surahInfo.nameAr}
             </h4>
             <p className={primary_font.className}>
@@ -105,28 +121,28 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
             </p>
           </div>
 
-          <div className={styles.menuList} ref={dropdownRef}>
-            <div className={styles.selectWrappers}>
-              <p className={styles.juzName}>{juzData.juzNameAr}</p>
+          <div className={sd.menuList} ref={dropdownRef}>
+            <div>
+              <p className={sd.juzName}>{juzData.juzNameAr}</p>
             </div>
             <hr />
 
             {/* Surah Dropdown */}
             <div
-              className={styles.customDropdown}
+              className={sd.customDropdown}
               onClick={() => {
                 setChapterOpen((prev) => !prev);
                 setVerseOpen(false);
               }}
             >
-              <div className={`${roboto.className} ${styles.dropdownHeader}`}>
+              <div className={`${roboto.className} ${sd.dropdownHeader}`}>
                 {juzData.surahInfo.nameEn}
-                <MdOutlineKeyboardArrowDown className={styles.selectIcon} />
+                <MdOutlineKeyboardArrowDown />
               </div>
               {chapterOpen && (
-                <ul className={styles.dropdownList}>
+                <ul className={sd.dropdownList}>
                   {isJuzPending ? (
-                    <li className={styles.disabled}>Loading Surahs...</li>
+                    <li className={sd.disabled}>Loading Surahs...</li>
                   ) : (
                     Array.from(
                       new Map(
@@ -136,9 +152,9 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
                       <li
                         key={surah.surahNumber}
                         onClick={() => handleChapterChange(surah.surahNumber)}
-                        className={`${roboto.className} ${styles.dropdownItem} ${
+                        className={`${roboto.className} ${sd.dropdownItem} ${
                           surah.surahNumber === juzData.surahNumber
-                            ? styles.activeItem
+                            ? sd.activeItem
                             : ""
                         }`}
                       >
@@ -153,18 +169,18 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
 
             {/* Verse Dropdown */}
             <div
-              className={styles.customDropdown}
+              className={sd.customDropdown}
               onClick={() => {
                 setVerseOpen((prev) => !prev);
                 setChapterOpen(false);
               }}
             >
-              <div className={`${roboto.className} ${styles.dropdownHeader}`}>
+              <div className={`${roboto.className} ${sd.dropdownHeader}`}>
                 Verse {activeVerse}
-                <MdOutlineKeyboardArrowDown className={styles.selectIcon} />
+                <MdOutlineKeyboardArrowDown />
               </div>
               {verseOpen && (
-                <ul className={styles.dropdownList}>
+                <ul className={sd.dropdownList}>
                   {Array.from(
                     { length: juzData.surahInfo.verseCount },
                     (_, i) => i + 1
@@ -176,8 +192,8 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
                     return (
                       <li
                         key={verseNumber}
-                        className={`${roboto.className} ${styles.dropdownItem} ${
-                          verseNumber === activeVerse ? styles.activeItem : ""
+                        className={`${roboto.className} ${sd.dropdownItem} ${
+                          verseNumber === activeVerse ? sd.activeItem : ""
                         }`}
                       >
                         <Link

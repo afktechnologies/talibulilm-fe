@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import styles from "./translation.module.css";
 import { lateef, primary_font, roboto } from "@/app/font/font";
 import { IoBookOutline, IoPlayOutline } from "react-icons/io5";
 import { MdOutlineBookmark, MdOutlineBookmarkAdd } from "react-icons/md";
@@ -26,6 +25,26 @@ interface TranslationProps {
   isAyahPending: boolean;
   isAyahError: Error | null;
 }
+
+const tr = {
+  wrapper: "flex justify-center overflow-x-hidden bg-white rounded-bl-[20px] rounded-br-[20px]",
+  container: "flex flex-col max-w-[1440px] w-full bg-white m-4 mb-40",
+  title: "flex justify-center items-center gap-4 mb-8",
+  titleH3: "text-[1.8rem] text-[#5C6357] max-md:text-[1.4rem] max-[500px]:text-[1.4rem]",
+  originImg: "w-[28px] h-[28px] align-middle [mix-blend-mode:multiply] mx-4 max-md:w-5 max-md:h-5 max-[500px]:w-5 max-[500px]:h-5",
+  main: "my-2 mx-4",
+  details: "flex justify-between text-[#7D887A] m-4",
+  detailsSvg: "w-[1.2rem] h-[1.2rem] cursor-pointer hover:text-black hover:transition-colors hover:duration-300 hover:ease-in-out max-md:w-[1rem] max-md:h-[1rem] max-[500px]:w-[0.9rem] max-[500px]:h-[0.9rem]",
+  ayah: "flex flex-col gap-2 items-end justify-end mx-4",
+  ayahH4: "text-[2rem] text-black text-end font-normal tracking-[0.1rem] max-md:text-[1.5rem] max-[500px]:text-[1.5rem]",
+  arabic: "flex flex-row-reverse justify-center items-center gap-4",
+  ayahP: "text-justify tracking-[0.075rem] font-thin text-[1.2rem] max-md:text-[1rem] max-[500px]:text-[0.9rem]",
+  buttons: "flex gap-12 text-[#7D887A] m-4 max-md:gap-8 max-[500px]:gap-4",
+  buttonsSvg: "w-6 h-6 cursor-pointer hover:text-black hover:transition-colors hover:duration-300 hover:ease-in-out max-md:w-[1rem] max-md:h-[1rem] max-[500px]:w-[1rem] max-[500px]:h-[1rem]",
+  diamondWrapper: "flex items-center w-full",
+  line: "flex-1 h-px bg-[#7A604F]",
+  diamond: "w-[5px] h-[5px] bg-[#7A604F] rotate-45",
+};
 
 const Translation: React.FC<TranslationProps> = ({
   juzData,
@@ -97,10 +116,10 @@ const Translation: React.FC<TranslationProps> = ({
 
   if (isAyahPending) {
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <div className={styles.title}>
-            <h3 className={primary_font.className}>
+      <div className={tr.wrapper}>
+        <div className={tr.container}>
+          <div className={tr.title}>
+            <h3 className={`${primary_font.className} ${tr.titleH3}`}>
               {juzData?.surahInfo.nameEnMeaning}
               {origin && (
                 <Image
@@ -108,7 +127,7 @@ const Translation: React.FC<TranslationProps> = ({
                   alt={origin}
                   width={32}
                   height={32}
-                  className={styles.originImg}
+                  className={tr.originImg}
                 />
               )}
             </h3>
@@ -119,7 +138,7 @@ const Translation: React.FC<TranslationProps> = ({
               width="90%"
               height="600px"
               borderRadius="10px"
-              className={styles.main}
+              className={tr.main}
             />
           ))}
         </div>
@@ -128,10 +147,10 @@ const Translation: React.FC<TranslationProps> = ({
   }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <h3 className={primary_font.className}>
+    <div className={tr.wrapper}>
+      <div className={tr.container}>
+        <div className={tr.title}>
+          <h3 className={`${primary_font.className} ${tr.titleH3}`}>
             {juzData?.surahInfo.nameEnMeaning}
             {origin && (
               <Image
@@ -139,7 +158,7 @@ const Translation: React.FC<TranslationProps> = ({
                 alt={origin}
                 width={32}
                 height={32}
-                className={styles.originImg}
+                className={tr.originImg}
               />
             )}
           </h3>
@@ -160,46 +179,46 @@ const Translation: React.FC<TranslationProps> = ({
             return (
               <div
                 key={index}
-                className={styles.main}
+                className={tr.main}
                 ref={(el) => {
                   ayahRefs.current[index] = el;
                 }}
               >
-                <div className={styles.details}>
+                <div className={tr.details}>
                   <p>
                     {ayah.surahNumber}
                     <span>:</span>
                     {ayah.ayahNumber}
                   </p>
-                  <SlOptions />
+                  <SlOptions className={tr.detailsSvg} />
                 </div>
-                <div className={styles.ayah}>
-                  <div className={styles.arabic}>
-                    <h4 className={lateef.className}>{ayah.arabicText}</h4>
+                <div className={tr.ayah}>
+                  <div className={tr.arabic}>
+                    <h4 className={`${lateef.className} ${tr.ayahH4}`}>{ayah.arabicText}</h4>
                   </div>
-                  <p className={roboto.className}>
+                  <p className={`${roboto.className} ${tr.ayahP}`}>
                     {ayah.translations[0].translationText}
                   </p>
                 </div>
-                <div className={styles.buttons}>
-                  <IoBookOutline />
-                  <IoPlayOutline />
+                <div className={tr.buttons}>
+                  <IoBookOutline className={tr.buttonsSvg} />
+                  <IoPlayOutline className={tr.buttonsSvg} />
                   <div
                     onClick={handleBookmarkToggle}
                     style={{ cursor: "pointer" }}
                   >
                     {isBookmarked ? (
-                      <MdOutlineBookmark />
+                      <MdOutlineBookmark className={tr.buttonsSvg} />
                     ) : (
-                      <MdOutlineBookmarkAdd />
+                      <MdOutlineBookmarkAdd className={tr.buttonsSvg} />
                     )}
                   </div>
-                  <LiaRedoAltSolid />
+                  <LiaRedoAltSolid className={tr.buttonsSvg} />
                 </div>
-                <div className={styles.diamondWrapper}>
-                  <span className={styles.diamond}></span>
-                  <span className={styles.line}></span>
-                  <span className={styles.diamond}></span>
+                <div className={tr.diamondWrapper}>
+                  <span className={tr.diamond}></span>
+                  <span className={tr.line}></span>
+                  <span className={tr.diamond}></span>
                 </div>
               </div>
             );

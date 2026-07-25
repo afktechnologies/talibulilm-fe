@@ -54,7 +54,6 @@
 // components/VideoModal.tsx
 
 import React from "react";
-import styles from "./videoModal.module.css";
 
 interface VideoModalProps {
   videoId: string;
@@ -63,16 +62,17 @@ interface VideoModalProps {
 
 const VideoModal: React.FC<VideoModalProps> = ({ videoId, onClose }) => {
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
-      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+    <div className="fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.85)] flex justify-center items-center z-[1000]" onClick={onClose}>
+      <div className="relative w-[90%] max-w-[960px] h-[80vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
         <iframe
+          className="w-full h-full"
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
           title="YouTube video"
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
         />
-        <button className={styles.closeButton} onClick={onClose}>✕</button>
+        <button className="absolute top-[8px] right-[12px] text-[1.5rem] bg-transparent border-none text-white cursor-pointer" onClick={onClose}>✕</button>
       </div>
     </div>
   );

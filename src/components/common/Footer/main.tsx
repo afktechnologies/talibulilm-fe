@@ -1,6 +1,5 @@
 "use client";
 import FooterLinks from "./FooterLinks";
-import styles from "./main.module.css";
 import { FaRegCopyright } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { primary_font } from "@/app/font/font";
@@ -12,11 +11,11 @@ const MainFooter = () => {
   return (
     <>
       {pageActive !== "admin" && pageActive !== "auth" && (
-        <div className={styles.main}>
+        <div className="w-full bg-[#5C6357] py-4 px-6 overflow-hidden">
           <FooterLinks />
-          <div className={`${styles.copyright} ${primary_font.className}`}>
-            <p>
-              Copyright <FaRegCopyright /> 2025 <span>TALIBULILM</span> All Rights Reserved
+          <div className={`${primary_font.className} flex justify-center items-center py-6`}>
+            <p className="text-center font-thin text-[#D9D9D9] max-md:text-[0.8rem]">
+              Copyright <FaRegCopyright className="w-4 h-4 mx-2 p-0 max-md:w-[0.8rem] max-md:h-[0.8rem]" /> 2025 <span className="font-bold">TALIBULILM</span> All Rights Reserved
             </p>
           </div>
         </div>

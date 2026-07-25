@@ -99,7 +99,6 @@ import {
   ThreadsIcon,
 } from "react-share";
 import { MdOutlineShare } from "react-icons/md";
-import styles from "./shareToolTip.module.css";
 
 interface ShareTooltipProps {
   open: boolean;
@@ -122,27 +121,27 @@ const ShareTooltip: React.FC<ShareTooltipProps> = ({
       onClose={onClose}
       arrow
       title={
-        <div className={styles.tooltipContent}>
+        <div className="flex items-center justify-center gap-[0.3rem] p-2 bg-[#f5f5f5] rounded-2xl shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
           <FacebookShareButton url={shareUrl}>
-            <FacebookIcon round className={styles.icon} />
+            <FacebookIcon round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </FacebookShareButton>
           <TwitterShareButton url={shareUrl} title={shareText}>
-            <TwitterIcon round className={styles.icon} />
+            <TwitterIcon round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </TwitterShareButton>
           <WhatsappShareButton url={shareUrl} title={shareText}>
-            <WhatsappIcon  round className={styles.icon} />
+            <WhatsappIcon  round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </WhatsappShareButton>
           <EmailShareButton url={shareUrl} subject="Hadith of the Day" body={shareText}>
-            <EmailIcon  round className={styles.icon} />
+            <EmailIcon  round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </EmailShareButton>
           <TelegramShareButton url={shareUrl} title={shareText}>
-            <TelegramIcon round className={styles.icon} />
+            <TelegramIcon round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </TelegramShareButton>
           <FacebookMessengerShareButton url={shareUrl} appId="">
-            <FacebookMessengerIcon round className={styles.icon} />
+            <FacebookMessengerIcon round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </FacebookMessengerShareButton>
           <ThreadsShareButton url={shareUrl}>
-            <ThreadsIcon round className={styles.icon} />
+            <ThreadsIcon round className="rounded-full p-1 pb-0 w-8 h-8 transition-[transform,background-color] duration-200 hover:scale-110 hover:bg-[#e0e0e0]" />
           </ThreadsShareButton>
         </div>
       }

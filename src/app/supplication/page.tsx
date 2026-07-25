@@ -2,23 +2,40 @@ import DuaCards from "@/components/Supplication/Home/DuaCards";
 import SupplicationHero from "@/components/Supplication/Home/Hero";
 import DailyDhikr from "@/components/Supplication/Home/DailyDhikr";
 import OtherAdhkaar from "@/components/Supplication/Home/Index";
-import duaList from "@/store/data/duaList.json";
+import { supplicationApi } from "@/services/api/endpoints/supplication";
+import { getCategoryIcon, getCategoryImagePath } from "@/utils/supplicationHelpers";
+
+// Supplication categories/duas are admin-managed and can change at any time;
+// render per-request rather than at build time so the page never depends on
+// backend availability during the build itself.
+export const dynamic = "force-dynamic";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export type DuaItem = {
   title: string;
   pic: string;
   icon: string;
+  slug: string;
 };
 
 // ─── Data slices ──────────────────────────────────────────────────────────────
-// First 8 entries go to the Daily Dhikr grid; everything after goes to the accordion.
+// First 8 categories go to the Daily Dhikr grid; everything after goes to the accordion.
 const DAILY_DHIKR_COUNT = 8;
-const dailyDhikrList: DuaItem[] = (duaList as DuaItem[]).slice(0, DAILY_DHIKR_COUNT);
-const otherAdhkaarList: DuaItem[] = (duaList as DuaItem[]).slice(DAILY_DHIKR_COUNT);
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-export default function Supplication() {
+export default async function Supplication() {
+  const categoriesRes = await supplicationApi.getCategories();
+
+  const duaItems: DuaItem[] = categoriesRes.data.map((category) => ({
+    title: category.name,
+    pic: getCategoryImagePath(category),
+    icon: getCategoryIcon(category.name),
+    slug: category.slug,
+  }));
+
+  const dailyDhikrList = duaItems.slice(0, DAILY_DHIKR_COUNT);
+  const otherAdhkaarList = duaItems.slice(DAILY_DHIKR_COUNT);
+
   return (
     <div>
       <SupplicationHero
@@ -27,13 +44,13 @@ export default function Supplication() {
         reference="Al-Bukhari 222"
       />
 
-      {/* DuaCards reads its own data from duaCardData.json — no props needed */}
+      {/* DuaCards fetches its own featured duas from the backend — no props needed */}
       <DuaCards />
 
-      {/* Daily Dhikr grid — first 8 items */}
+      {/* Daily Dhikr grid — first 8 categories */}
       <DailyDhikr items={dailyDhikrList} />
 
-      {/* Accordion — remaining items */}
+      {/* Accordion — remaining categories */}
       <OtherAdhkaar items={otherAdhkaarList} />
     </div>
   );

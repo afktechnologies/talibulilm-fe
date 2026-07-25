@@ -1,10 +1,9 @@
 import React from 'react'
 import Rectangle from '../rectangle'
-import styles from "./surahSkeleton.module.css"
 
 const SurahSkeleton = () => {
   return (
-    <div className={styles.contentGrid}>
+    <div className="w-full grid grid-cols-3 gap-6 mt-4 max-[1000px]:grid-cols-2 max-[1000px]:gap-4 max-[600px]:grid-cols-1 max-[600px]:gap-4">
         {Array.from({ length: 5 }).map((_, index) => (
           <Rectangle
             key={index}

@@ -1,22 +1,15 @@
 import { apiClient } from "../client";
-
-export interface QnaEntry {
-  id: number;
-  number: string;
-  category: string;
-  categoryLabel: string;
-  question: string;
-  summary: string;
-  answer: any[];
-  references: string[];
-  date: string;
-  views: number;
-}
+import { QnaCategoryResponse, QnaResponse } from "@/types/qna";
 
 export const qnaApi = {
-  getQnaData: () => 
-    apiClient.get("qna").json<{categories: any[], questions: QnaEntry[], popularQuestions: any[]}>(),
-  
-  askQuestion: (formData: any) => 
-    apiClient.post("qna/ask", { json: formData }).json(),
+  // All Qna Categories
+  getCategories: (page: number = 1, limit: number = 0) =>
+    apiClient.get(`qna-categories?page=${page}&limit=${limit}`).json<QnaCategoryResponse>(),
+
+  // All Qna entries
+  getAll: (page: number = 1, limit: number = 0) =>
+    apiClient.get(`qna?page=${page}&limit=${limit}`).json<QnaResponse>(),
+
+  getByCategory: (categoryId: number, page: number = 1, limit: number = 0) =>
+    apiClient.get(`qna/category/${categoryId}?page=${page}&limit=${limit}`).json<QnaResponse>(),
 };

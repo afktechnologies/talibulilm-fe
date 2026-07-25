@@ -1,9 +1,8 @@
 import Rectangle from "../rectangle"
-import styles from "./juzAndPageSkeleton.module.css"
 
 const JuzAndPageSkeleton = () => {
   return (
-    <div className={styles.contentGrid}>
+    <div className="w-full grid grid-cols-1 gap-6 mt-4 overflow-hidden">
         {Array.from({ length: 5 }).map((_, index) => (
           <Rectangle
             key={index}

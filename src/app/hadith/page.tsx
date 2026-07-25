@@ -3,7 +3,6 @@
 // import HadithTopics from "@/components/Hadith/Home/topics";
 import HadithMainPageHero from "@/components/Hadith/Home/Hero";
 // import QuranicVerse from "@/components/Hadith/Home/quranicVerse";
-import styles from "./index.module.css";
 // import DailyHadith from "@/components/Home/dailyHadith";
 // import hadithData from "@/store/data/hadithData.json";
 // import LastReadData from "../../store/data/LastRead.json";
@@ -13,7 +12,7 @@ import HadithBooks from "@/components/Hadith/Home/books";
 
 const Hadith = () => {
   return (
-    <div className={styles.container}>
+    <div className="pb-24">
       <HadithMainPageHero englishTranslation="Understand Islam Through the Prophet's (ﷺ) Ahadith" />
 
       <HadithLastRead />

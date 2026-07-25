@@ -3,7 +3,6 @@
 import React from "react";
 import HadithDetailsHero from "@/components/Hadith/Collections/Hero";
 import IndexPageHadith from "@/components/Hadith/Collections/indexPage";
-import styles from "./index.module.css";
 import { useHadithBookBySlug } from "@/services/hooks/hadith";
 import ComingSoon from "@/components/common/Errors/Fallback/comingSoon";
 

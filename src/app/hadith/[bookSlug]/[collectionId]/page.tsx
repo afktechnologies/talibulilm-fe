@@ -2,7 +2,6 @@
 import React from "react";
 import HadithDetailsHero from "@/components/Hadith/Collections/Hero";
 import IndexCard from "@/components/Hadith/Details/indexCard";
-import styles from "./index.module.css";
 import { useCollectionById, useHadithByCollectionId } from "@/services/hooks/hadith";
 import ChapterCard from "@/components/Hadith/Details/chapterCard";
 
@@ -27,8 +26,8 @@ const Hadiths = ({ params }: HadithPageProps) => {
         bookName={data?.[0]?.hadithCollection?.nameEn || null}
         isLoading={isLoading}
       />
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
+      <div className="w-full bg-[linear-gradient(45deg,transparent_34%,rgba(211,211,216,0.25)_35%,rgba(211,211,216,0.25)_40%,transparent_41%,transparent_59%,rgba(211,211,216,0.25)_60%,rgba(211,211,216,0.25)_65%,transparent_66%),linear-gradient(135deg,transparent_34%,rgba(211,211,216,0.25)_35%,rgba(211,211,216,0.25)_40%,transparent_41%,transparent_59%,rgba(211,211,216,0.25)_60%,rgba(211,211,216,0.25)_65%,transparent_66%)] bg-[length:3em_3em] bg-white opacity-100">
+        <div className="relative z-[5] py-8 px-6 mt-60 max-md:px-4 max-[600px]:px-2 max-[400px]:px-[0.2rem]">
           <IndexCard collectionName={data?.[0]?.hadithCollection?.nameEn} />
           <ChapterCard data={data || []} isLoading={isLoading} collectionData={collectionData} />
         </div>

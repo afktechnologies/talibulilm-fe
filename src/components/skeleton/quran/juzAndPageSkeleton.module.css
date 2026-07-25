@@ -1,8 +1,0 @@
-.contentGrid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  overflow: hidden;
-}

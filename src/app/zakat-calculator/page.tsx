@@ -1,6 +1,5 @@
 import ZakatCalculatorHero from "@/components/ZakatCalculator/Hero";
 import FAQ from "@/components/ZakatCalculator/faq";
-import styles from "./index.module.css"
 import VideoSection from "@/components/ZakatCalculator/videoSection";
 import MainCalculator from "@/components/ZakatCalculator/mainCalculator";
 import ComingSoon from "@/components/common/Errors/Fallback/comingSoon";

@@ -115,7 +115,6 @@
 
 import { useEffect, useState } from "react";
 import { usePage } from "@/services/hooks/quran";
-import styles from "../Cards/pageCard.module.css";
 import { PageList } from "@/types/surah";
 import PageCard from "../Cards/pageCard";
 import JuzAndPageSkeleton from "@/components/skeleton/quran/juzAndPageSkeleton";
@@ -157,7 +156,7 @@ const PageContent = ({ searchQuery, onResultsChange }: PageContentProps) => {
     );
 
   return (
-    <div className={styles.CardContainer}>
+    <div className="w-full flex flex-col gap-4 px-5 m-0 max-[780px]:py-5 max-[780px]:px-[10px] max-[530px]:p-0">
       {Object.entries(
         filteredData.reduce<Record<string, PageList[]>>((groups, item) => {
           const surah = item.surahInfo.nameEn;

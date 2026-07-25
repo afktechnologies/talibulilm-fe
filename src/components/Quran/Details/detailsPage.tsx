@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import styles from "./mainNav.module.css";
 import { lateef } from "@/app/font/font";
 import Translation from "./translation";
 import MainNav from "./mainNav";
@@ -65,17 +64,17 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ surahSlug }) => {
 
   if (isJuzPending) {
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <div className={styles.despBar}>
-            <h2 className={`${styles.title} ${lateef.className}`}></h2>
+      <div className="flex justify-center overflow-x-hidden mx-6 max-md:mx-4">
+        <div className="flex flex-col max-w-[1440px] w-full">
+          <div>
+            <h2 className={lateef.className}></h2>
             <div>
-              <p className={styles.JuzNumber}></p>
+              <p></p>
             </div>
           </div>
         </div>
 
-        <div className={styles.tabContent}>
+        <div className="border-t border-[#ddd]">
           <Rectangle width="100%" height="1000px" borderRadius="10px" />
         </div>
       </div>
@@ -84,17 +83,17 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ surahSlug }) => {
 
   if (isJuzError && !juz) {
     return (
-      <div className={styles.wrapper}>
+      <div className="flex justify-center overflow-x-hidden mx-6 max-md:mx-4">
         <FallbackError />
       </div>
     );
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className="flex justify-center overflow-x-hidden mx-6 max-md:mx-4">
       {juz && (
-        <div className={styles.container}>
-          <div className={styles.NavContainer}>
+        <div className="flex flex-col max-w-[1440px] w-full">
+          <div>
             <MainNav
               juzData={juz}
               isJuzPending={isJuzPending}
@@ -104,7 +103,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ surahSlug }) => {
               onVerseSelect={handleVerseSelect}
             />
           </div>
-          <div className={styles.tabContent}>
+          <div className="border-t border-[#ddd]">
             <Reading
               juzData={juz}
               isVisible={selectedMode === "reading"}

@@ -1,5 +1,4 @@
 import Hero from "@/components/Home/Hero";
-import styles from "./home.module.css";
 import About from "@/components/Home/about";
 import DailyAyah from "@/components/Home/dailyAyah";
 import DailyHadith from "@/components/Home/dailyHadith";
@@ -11,7 +10,7 @@ import DonationComponent from "@/components/Home/donation";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <div>
       <Hero
         arabicText="طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ"
         englishTranslation="Seeking knowledge is a duty upon every Muslim."

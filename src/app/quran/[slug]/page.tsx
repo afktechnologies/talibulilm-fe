@@ -1,5 +1,4 @@
 import FallbackError from "@/components/common/Errors/Fallback/fallbackError";
-import styles from "./index.module.css";
 import QuranDetailsPage from "@/components/Quran/Details/detailsPage";
 
 interface PageProps {
@@ -18,7 +17,7 @@ const QuranDetails = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className={styles.main}>
+    <div className="bg-[#E2E2DE] pt-12 pr-0 pb-30 pl-0 max-md:pt-8 max-md:pb-22 max-[500px]:pt-8 max-[500px]:pb-14 max-[400px]:pt-8 max-[400px]:pb-12">
       <QuranDetailsPage surahSlug={slug} />
     </div>
   );
