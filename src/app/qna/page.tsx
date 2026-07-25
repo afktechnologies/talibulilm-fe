@@ -19,6 +19,32 @@ type QnaPageData = {
 export default function QnaPage() {
   const data = rawData as QnaPageData;
 
+// import QnaHero   from "@/components/Qna/QnaHero";
+// import QnaClient from "@/components/Qna/QnaClient";
+// import type { QnaEntry } from "@/components/Qna/QnaCard";
+
+// type QnaPageData = {
+//   categories       : { id: string; label: string }[];
+//   questions        : QnaEntry[];
+//   popularQuestions : { id: number; number: string; question: string; views: number }[];
+// };
+
+// export default async function QnaPage() {
+//   let data: QnaPageData;
+//   try {
+//     const res = await fetch(`https://api.talibulilm.in/qna`, {
+//       next: { revalidate: 3600 },
+//     });
+//     const apiData = await res.json();
+//     data = apiData.data || apiData;
+//   } catch (error) {
+//     // Fallback to static
+//     const rawData = await import("@/store/data/qnaData.json");
+//     data = rawData.default as QnaPageData;
+//     console.warn("Using static QnA data");
+//   }
+
+  
   return (
     <main className="min-h-screen">
       <QnaHero />

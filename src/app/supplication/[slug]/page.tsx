@@ -30,6 +30,35 @@ type DuaPageData = {
 export default function DuaPage() {
   const data = pageData as DuaPageData;
 
+// import DuaHero from "@/components/Supplication/Dua/DuaHero";
+// import DuaList from "@/components/Supplication/Dua/DuaList";
+// import DuaSidebar from "@/components/Supplication/Dua/DuaSidebar";
+// import type { DuaEntry } from "@/components/Supplication/Dua/DuaCard";
+
+// interface PageProps {
+//   params: Promise<{
+//     slug: string;
+//   }>;
+// }
+
+// // ─── Page ─────────────────────────────────────────────────────────────────────
+// export default async function DuaPage({ params }: PageProps) {
+//   const { slug } = await params;
+  
+//   // Fetch from API (fallback to static if needed)
+//   let data;
+//   try {
+//     const res = await fetch(`https://api.talibulilm.in/supplications/${slug}`, {
+//       next: { revalidate: 3600 }, // ISR
+//     });
+//     data = await res.json();
+//   } catch (error) {
+//     // Fallback to static for evening
+//     const staticData = await import("@/store/data/eveningAdhkaar.json");
+//     data = staticData.default || staticData;
+//     console.warn("Using static fallback for supplication:", slug);
+//   }
+
   return (
     <main className="min-h-screen bg-[#f8f7f4] ">
       {/* ── Hero ────────────────────────────────────────────────────────── */}
