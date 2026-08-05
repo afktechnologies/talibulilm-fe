@@ -3,6 +3,8 @@ import quranLastReadReducer from "./slice/quranLastReadSlice";
 import quranBookmarkReducer from "./slice/quranBookmarkSlice"
 import hadithLastReadReducer from "./slice/hadithLastReadSlice"
 import hadithBookmarkReducer from "./slice/hadithBookmarkSlice"
+import supplicationBookmarkReducer from "./slice/supplicationBookmarkSlice"
+import qnaBookmarkReducer from "./slice/qnaBookmarkSlice"
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from "redux-persist";
 import {
@@ -17,7 +19,14 @@ import {
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["quranLastRead", "quranBookmark" ,"hadithLastRead", "hadithBookmark"],
+  whitelist: [
+    "quranLastRead",
+    "quranBookmark",
+    "hadithLastRead",
+    "hadithBookmark",
+    "supplicationBookmark",
+    "qnaBookmark",
+  ],
 };
 
 const rootReducer = {
@@ -25,6 +34,8 @@ const rootReducer = {
   quranBookmark: quranBookmarkReducer,
   hadithLastRead: hadithLastReadReducer,
   hadithBookmark: hadithBookmarkReducer,
+  supplicationBookmark: supplicationBookmarkReducer,
+  qnaBookmark: qnaBookmarkReducer,
 };
 
 const persistedReducer = persistReducer(persistConfig, combineReducers(rootReducer));

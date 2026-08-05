@@ -1,45 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getNames } from "country-list";
+import { qnaApi } from "@/services/api/endpoints/qna";
+import type { QnaCategoryList } from "@/types/qna";
+import type { AuthUser } from "@/types/auth";
 
-const CATEGORIES = [
-  "Select a category",
-  "Fiqh & Worship",
-  "Aqeedah",
-  "Quran",
-  "Hadith",
-  "Family & Marriage",
-  "Character & Morals",
-  "Islamic History",
-  "Other",
-];
-
-const COUNTRIES = [
-  "India", "Pakistan", "Bangladesh", "United Kingdom", "United States",
-  "Canada", "Australia", "Saudi Arabia", "UAE", "Malaysia",
-  "Indonesia", "South Africa", "Nigeria", "Egypt", "Other",
-];
+const COUNTRIES = getNames().sort((a, b) => a.localeCompare(b));
+const OTHER_CATEGORY_VALUE = "OTHER";
+const QUESTION_MIN = 20;
+const QUESTION_MAX = 1500;
 
 type FormData = {
-  name        : string;
-  email       : string;
-  gender      : string;
-  country     : string;
-  category    : string;
-  title       : string;
-  detail      : string;
+  gender: string;
+  country: string;
+  categoryId: string;
+  question: string;
   agreeToTerms: boolean;
 };
 
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
-const TITLE_MAX  = 120;
-const DETAIL_MIN = 80;
-const DETAIL_MAX = 1500;
-
 // ─── Success screen ───────────────────────────────────────────────────────────
-const SuccessScreen = ({ title }: { title: string }) => (
+const SuccessScreen = () => (
   <div className="bg-white border border-gray-200 rounded-lg px-6 py-12 text-center">
     <div className="w-10 h-10 rounded-full bg-green-50 border border-green-200 flex items-center justify-center mx-auto mb-5">
       <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -47,11 +31,8 @@ const SuccessScreen = ({ title }: { title: string }) => (
       </svg>
     </div>
     <h2 className="text-lg font-bold text-[#003049] mb-2">Question submitted</h2>
-    <p className="text-sm text-gray-500 mb-1 max-w-sm mx-auto leading-relaxed">
+    <p className="text-sm text-gray-500 mb-8 max-w-sm mx-auto leading-relaxed">
       Your question has been received and will be reviewed by our team.
-    </p>
-    <p className="text-xs text-gray-400 italic mb-8 max-w-sm mx-auto">
-      &ldquo;{title}&rdquo;
     </p>
     <div className="flex items-center justify-center gap-3">
       <Link
@@ -64,7 +45,7 @@ const SuccessScreen = ({ title }: { title: string }) => (
         onClick={() => window.location.reload()}
         className="text-xs font-semibold text-gray-600 hover:text-[#003049] border border-gray-200 hover:border-gray-300 px-4 py-2 rounded-md transition-colors"
       >
-        Submit another
+        Ask another
       </button>
     </div>
   </div>
@@ -113,20 +94,37 @@ const inputCls = (hasError?: boolean) =>
   }`;
 
 // ─── Main form ────────────────────────────────────────────────────────────────
-const AskForm = () => {
+interface AskFormProps {
+  user: AuthUser;
+}
+
+const AskForm = ({ user }: AskFormProps) => {
+  const [categories, setCategories] = useState<QnaCategoryList[]>([]);
+  const [dailyLimit, setDailyLimit] = useState<number | null>(null);
+
+  useEffect(() => {
+    qnaApi
+      .getCategories(true)
+      .then((response) => setCategories(response.data))
+      .catch(() => setCategories([]));
+
+    qnaApi
+      .getSettings()
+      .then((response) => setDailyLimit(response.data.dailySubmissionLimit))
+      .catch(() => setDailyLimit(null));
+  }, []);
+
   const [form, setForm] = useState<FormData>({
-    name        : "",
-    email       : "",
-    gender      : "",
-    country     : "",
-    category    : "",
-    title       : "",
-    detail      : "",
+    gender: "",
+    country: "",
+    categoryId: "",
+    question: "",
     agreeToTerms: false,
   });
-  const [errors,    setErrors]    = useState<FormErrors>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [loading,   setLoading]   = useState(false);
+  const [errors,     setErrors]     = useState<FormErrors>({});
+  const [submitted,  setSubmitted]  = useState(false);
+  const [loading,    setLoading]    = useState(false);
+  const [formError,  setFormError]  = useState<string | null>(null);
 
   const set = (field: keyof FormData, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -138,21 +136,13 @@ const AskForm = () => {
   const validate = (): boolean => {
     const e: FormErrors = {};
 
-    if (!form.category || form.category === "Select a category")
-      e.category = "Please select a category.";
+    if (!form.categoryId)
+      e.categoryId = "Please select a category.";
 
-    if (!form.title.trim())
-      e.title = "Question title is required.";
-    else if (form.title.trim().length < 10)
-      e.title = "Title must be at least 10 characters.";
-
-    if (!form.detail.trim())
-      e.detail = "Please provide details for your question.";
-    else if (form.detail.trim().length < DETAIL_MIN)
-      e.detail = `Please write at least ${DETAIL_MIN} characters (currently ${form.detail.trim().length}).`;
-
-    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = "Enter a valid email address.";
+    if (!form.question.trim())
+      e.question = "Please enter your question.";
+    else if (form.question.trim().length < QUESTION_MIN)
+      e.question = `Please write at least ${QUESTION_MIN} characters (currently ${form.question.trim().length}).`;
 
     if (!form.agreeToTerms)
       e.agreeToTerms = "You must agree to the submission guidelines.";
@@ -164,55 +154,71 @@ const AskForm = () => {
   // ── Submit ──────────────────────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     if (!validate()) return;
 
     setLoading(true);
-    // Replace with your API call:
-    // await fetch('/api/qna/ask', { method: 'POST', body: JSON.stringify(form) })
-    await new Promise((r) => setTimeout(r, 1200)); // simulate network
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      await qnaApi.submitQuestion({
+        question: form.question.trim(),
+        gender: form.gender || undefined,
+        country: form.country || undefined,
+        categoryId:
+          form.categoryId && form.categoryId !== OTHER_CATEGORY_VALUE
+            ? Number(form.categoryId)
+            : undefined,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Unable to submit your question. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (submitted) return <SuccessScreen title={form.title} />;
+  if (submitted) return <SuccessScreen />;
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-6">
+
+      {formError && (
+        <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-md px-4 py-3">
+          {formError}
+        </div>
+      )}
 
       {/* ── Section: About you ────────────────────────────────────────── */}
       <div className="bg-white border border-gray-200 rounded-lg divide-y divide-gray-100">
         <div className="px-5 py-4">
           <h2 className="text-sm font-bold text-[#003049]">About You</h2>
-          <p className="text-xs text-gray-400 mt-0.5">All fields in this section are optional.</p>
+          <p className="text-xs text-gray-400 mt-0.5">
+            Name and email are taken from your account. Gender and country are optional.
+          </p>
         </div>
 
         <div className="px-5 py-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {/* Name */}
+          {/* Name — auto-filled, read-only */}
           <Field label="Name">
             <input
               type="text"
-              value={form.name}
-              onChange={(e) => set("name", e.target.value)}
-              placeholder="e.g. Abdullah, Fatima (or leave blank)"
-              className={inputCls()}
+              value={[user.firstName, user.lastName].filter(Boolean).join(" ")}
+              disabled
+              className={`${inputCls()} bg-gray-50 text-gray-500 cursor-not-allowed`}
             />
           </Field>
 
-          {/* Email */}
-          <Field label="Email address" error={errors.email}
-            hint="We'll notify you when answered">
+          {/* Email — auto-filled, read-only */}
+          <Field label="Email address">
             <input
               type="email"
-              value={form.email}
-              onChange={(e) => { set("email", e.target.value); clearError("email"); }}
-              placeholder="you@example.com"
-              className={inputCls(!!errors.email)}
+              value={user.email}
+              disabled
+              className={`${inputCls()} bg-gray-50 text-gray-500 cursor-not-allowed`}
             />
           </Field>
 
           {/* Gender */}
-          <Field label="Gender"
-            hint="Affects some rulings">
+          <Field label="Gender" hint="Affects some rulings">
             <select
               value={form.gender}
               onChange={(e) => set("gender", e.target.value)}
@@ -225,8 +231,7 @@ const AskForm = () => {
           </Field>
 
           {/* Country */}
-          <Field label="Country / Region"
-            hint="For context-specific answers">
+          <Field label="Country / Region" hint="For context-specific answers">
             <select
               value={form.country}
               onChange={(e) => set("country", e.target.value)}
@@ -248,65 +253,35 @@ const AskForm = () => {
 
         <div className="px-5 py-5 space-y-5">
           {/* Category */}
-          <Field label="Category" required error={errors.category}>
+          <Field label="Category" required error={errors.categoryId}>
             <select
-              value={form.category}
-              onChange={(e) => { set("category", e.target.value); clearError("category"); }}
-              className={inputCls(!!errors.category)}
+              value={form.categoryId}
+              onChange={(e) => { set("categoryId", e.target.value); clearError("categoryId"); }}
+              className={inputCls(!!errors.categoryId)}
             >
-              {CATEGORIES.map((c) => (
-                <option key={c} disabled={c === "Select a category"} value={c === "Select a category" ? "" : c}>
-                  {c}
-                </option>
+              <option value="" disabled>Select a category</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
               ))}
+              <option value={OTHER_CATEGORY_VALUE}>Other</option>
             </select>
           </Field>
 
-          {/* Title */}
+          {/* Question */}
           <Field
-            label="Question title"
+            label="Your question"
             required
-            error={errors.title}
-            hint={`${form.title.length} / ${TITLE_MAX}`}
-          >
-            <input
-              type="text"
-              value={form.title}
-              maxLength={TITLE_MAX}
-              onChange={(e) => { set("title", e.target.value); clearError("title"); }}
-              placeholder="e.g. Is it permissible to combine prayers when travelling?"
-              className={inputCls(!!errors.title)}
-            />
-          </Field>
-
-          {/* Detail */}
-          <Field
-            label="Full question"
-            required
-            error={errors.detail}
-            hint={`${form.detail.length} / ${DETAIL_MAX}`}
+            error={errors.question}
+            hint={`${form.question.length} / ${QUESTION_MAX}`}
           >
             <textarea
-              value={form.detail}
-              maxLength={DETAIL_MAX}
+              value={form.question}
+              maxLength={QUESTION_MAX}
               rows={7}
-              onChange={(e) => { set("detail", e.target.value); clearError("detail"); }}
-              placeholder={`Describe your question in full. Include any relevant background — e.g. your situation, madhab, previous actions taken — so it can be answered accurately.\n\nMinimum ${DETAIL_MIN} characters.`}
-              className={`${inputCls(!!errors.detail)} resize-y min-h-[160px]`}
+              onChange={(e) => { set("question", e.target.value); clearError("question"); }}
+              placeholder={`Type your question here. Include any relevant background — e.g. your situation, madhab, previous actions taken — so it can be answered accurately.\n\nMinimum ${QUESTION_MIN} characters.`}
+              className={`${inputCls(!!errors.question)} resize-y min-h-[160px]`}
             />
-            {/* Character progress bar */}
-            <div className="mt-1.5 h-0.5 bg-gray-100 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${Math.min((form.detail.length / DETAIL_MAX) * 100, 100)}%`,
-                  backgroundColor:
-                    form.detail.length < DETAIL_MIN ? "#e5e7eb"
-                    : form.detail.length > DETAIL_MAX * 0.9 ? "#f59e0b"
-                    : "#003049",
-                }}
-              />
-            </div>
           </Field>
         </div>
       </div>
@@ -314,7 +289,7 @@ const AskForm = () => {
       {/* ── Agreement & submit ─────────────────────────────────────────── */}
       <div className="space-y-4">
         {/* Checkbox */}
-        <label className={`flex items-start gap-3 cursor-pointer group ${errors.agreeToTerms ? "opacity-100" : ""}`}>
+        <label className="flex items-start gap-3 cursor-pointer group">
           <div className="relative flex-shrink-0 mt-0.5">
             <input
               type="checkbox"
@@ -353,31 +328,39 @@ const AskForm = () => {
         )}
 
         {/* Submit row */}
-        <div className="flex items-center gap-4">
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex items-center gap-2 bg-[#003049] hover:bg-[#004a6e] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-6 py-2.5 rounded-md transition-colors duration-200"
-          >
-            {loading ? (
-              <>
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
-                </svg>
-                Submitting…
-              </>
-            ) : (
-              "Submit question"
-            )}
-          </button>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center gap-2 bg-[#003049] hover:bg-[#004a6e] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-6 py-2.5 rounded-md transition-colors duration-200"
+            >
+              {loading ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
+                  </svg>
+                  Submitting…
+                </>
+              ) : (
+                "Submit question"
+              )}
+            </button>
 
-          <Link
-            href="/qna"
-            className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            Cancel
-          </Link>
+            <Link
+              href="/qna"
+              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              Cancel
+            </Link>
+          </div>
+
+          {dailyLimit !== null && (
+            <p className="text-[11px] text-gray-400">
+              Up to {dailyLimit} question{dailyLimit === 1 ? "" : "s"} per day
+            </p>
+          )}
         </div>
       </div>
     </form>

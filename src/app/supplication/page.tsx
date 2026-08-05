@@ -3,7 +3,11 @@ import SupplicationHero from "@/components/Supplication/Home/Hero";
 import DailyDhikr from "@/components/Supplication/Home/DailyDhikr";
 import OtherAdhkaar from "@/components/Supplication/Home/Index";
 import { supplicationApi } from "@/services/api/endpoints/supplication";
-import { getCategoryIcon, getCategoryImagePath } from "@/utils/supplicationHelpers";
+import {
+  getCategoryFallbackImagePath,
+  getCategoryIcon,
+  getCategoryImagePath,
+} from "@/utils/supplicationHelpers";
 
 // Supplication categories/duas are admin-managed and can change at any time;
 // render per-request rather than at build time so the page never depends on
@@ -14,6 +18,8 @@ export const dynamic = "force-dynamic";
 export type DuaItem = {
   title: string;
   pic: string;
+  /** Bundled local image, ignoring the admin-entered `image` field — used if `pic` fails to load. */
+  fallbackPic: string;
   icon: string;
   slug: string;
 };
@@ -29,6 +35,7 @@ export default async function Supplication() {
   const duaItems: DuaItem[] = categoriesRes.data.map((category) => ({
     title: category.name,
     pic: getCategoryImagePath(category),
+    fallbackPic: getCategoryFallbackImagePath(category),
     icon: getCategoryIcon(category.name),
     slug: category.slug,
   }));

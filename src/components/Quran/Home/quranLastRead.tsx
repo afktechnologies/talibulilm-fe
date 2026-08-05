@@ -20,7 +20,7 @@ const QuranLastRead: React.FC = () => {
                   key={index}
                   href={`/quran/${item.surahSlug}?verse=${item.ayahNumber}`}
                 >
-                  <li className={`${primary_font.className} w-max py-[0.2rem] px-4 border border-solid border-[#c2cdd3] rounded-[5px] text-[1rem] text-[rgba(193,159,136,0.89)] cursor-pointer hover:bg-[rgba(193,159,136,0.89)] hover:text-white hover:border-[rgba(193,159,136,1)]`}>
+                  <li className={`${primary_font.className} w-max py-[0.2rem] px-4 border border-solid border-[#c2cdd3] rounded-[5px] text-[1rem] text-[#8A6D59] cursor-pointer transition-colors duration-200 ease-in-out hover:bg-[rgba(219,179,70,0.3)] hover:text-white hover:border-[#DBB346]`}>
                     {item.surahNameEn} {item.surahNumber}:{item.ayahNumber}
                   </li>
                 </Link>

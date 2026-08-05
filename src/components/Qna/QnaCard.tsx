@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import ShareTooltip from "@/components/common/Share/ShareTooltip";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addQnaBookmark, removeQnaBookmark } from "@/store/slice/qnaBookmarkSlice";
 
 export type AnswerBlock = {
   heading: string | null;
@@ -26,8 +29,24 @@ interface QnaCardProps {
 
 const QnaCard = ({ entry }: QnaCardProps) => {
   const [expanded, setExpanded] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [openShareTooltip, setOpenShareTooltip] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const bookmarks = useAppSelector((state) => state.qnaBookmark.items);
+  const bookmarked = bookmarks.some((b) => b.id === entry.id);
+
+  const handleBookmarkToggle = () => {
+    if (bookmarked) {
+      dispatch(removeQnaBookmark(entry.id));
+    } else {
+      dispatch(addQnaBookmark(entry));
+    }
+  };
+
+  const shareUrl =
+    typeof window !== "undefined" ? `${window.location.origin}${window.location.pathname}#question-${entry.id}` : "";
+  const shareText = `${entry.question}\n\n${entry.summary}`;
 
   const handleCopy = async () => {
     const text = [
@@ -68,7 +87,7 @@ const QnaCard = ({ entry }: QnaCardProps) => {
 
           {/* Bookmark */}
           <button
-            onClick={() => setBookmarked((b) => !b)}
+            onClick={handleBookmarkToggle}
             title={bookmarked ? "Remove bookmark" : "Save question"}
             className="text-gray-300 hover:text-[#c69e30] transition-colors duration-150"
           >
@@ -107,9 +126,13 @@ const QnaCard = ({ entry }: QnaCardProps) => {
                     {block.heading}
                   </h3>
                 )}
-                <p className="text-sm text-gray-700 leading-[1.9]">
-                  {block.text}
-                </p>
+                <div
+                  className="text-sm text-gray-700 leading-[1.9] [&_p]:mb-3 [&_p:last-child]:mb-0 [&_a]:text-[#003049] [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-bold"
+                  // The answer is authored as HTML via the admin panel's
+                  // rich-text editor (never user-submitted), so rendering
+                  // it directly is safe — matches ArticleDetail's content.
+                  dangerouslySetInnerHTML={{ __html: block.text }}
+                />
               </div>
             ))}
           </div>
@@ -169,15 +192,18 @@ const QnaCard = ({ entry }: QnaCardProps) => {
           </button>
 
           {/* Share */}
-          <button
-            onClick={() => navigator.share?.({ title: entry.question, text: entry.summary }).catch(() => {})}
-            className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-gray-600 transition-colors duration-150"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            Share
-          </button>
+          <div className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-gray-600 transition-colors duration-150 [&_svg]:w-3.5 [&_svg]:h-3.5">
+            <ShareTooltip
+              open={openShareTooltip}
+              onClose={() => setOpenShareTooltip(false)}
+              shareUrl={shareUrl}
+              shareText={shareText}
+              onClick={() => setOpenShareTooltip((v) => !v)}
+            />
+            <span onClick={() => setOpenShareTooltip((v) => !v)} className="cursor-pointer">
+              Share
+            </span>
+          </div>
 
           {/* Expand / collapse */}
           <button

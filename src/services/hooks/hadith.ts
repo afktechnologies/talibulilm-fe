@@ -67,8 +67,12 @@ export const useHadithsRandom = (limit: number = 1, options = {}) => {
 };
 
 export const useHadithsOfTheDay = ( options = {}) => {
+  // Keying on today's date means a new calendar day (or a fresh page load
+  // after midnight) naturally requests fresh data instead of serving a
+  // stale cached "yesterday" response for the rest of the session.
+  const today = new Date().toISOString().slice(0, 10);
   return useQuery({
-    queryKey: ["hadiths"],
+    queryKey: ["hadiths", "daily", today],
     queryFn: () => hadithApi.getHadithsOfTheDay(),
     select: (response) => response.data,
     ...options,

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { primary_font, roboto } from "@/app/font/font";
-import { JuzList } from "@/types/surah";
+import { JuzList, SurahList } from "@/types/surah";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -11,8 +11,8 @@ interface SideDrawerProps {
   setIsOpen: (isOpen: boolean) => void;
   isOpen: boolean;
   juzData: JuzList;
-  isJuzPending: boolean;
-  juzList: JuzList[] | undefined;
+  allSurahs: SurahList[] | undefined;
+  surahsLoading: boolean;
   selectedMode: "reading" | "translation";
   setSelectedMode: React.Dispatch<
     React.SetStateAction<"reading" | "translation">
@@ -21,28 +21,42 @@ interface SideDrawerProps {
 }
 
 const sd = {
-  overlay: "fixed top-0 left-0 w-full h-screen bg-[rgba(0,0,0,0.5)] opacity-100 visible transition-all duration-300 ease-in-out z-[1099]",
-  drawer: "fixed top-0 right-0 w-[80%] max-w-[400px] h-screen bg-white border-l border-[#7D887A] transition-[right] duration-300 ease-in-out z-[1100] flex flex-col md:hidden",
+  overlay:
+    "fixed inset-0 w-full h-screen bg-black/50 z-[1099] [animation:fadeIn_0.2s_ease-out]",
+  drawer:
+    "fixed top-0 right-0 w-[85%] max-w-[380px] h-screen bg-white shadow-[-8px_0_30px_rgba(0,0,0,0.15)] z-[1100] flex flex-col md:hidden [animation:slideInRight_0.3s_ease-out]",
   nav: "flex-1 flex flex-col h-full overflow-hidden",
-  headers: "py-[0.8rem] px-4 bg-[#f4e8c7] text-[#7a604f]",
-  headersH4: "font-bold text-[1.2rem]",
-  juzName: "font-bold text-[1.2rem] text-black",
-  menuList: "flex flex-col items-center flex-1 overflow-y-auto p-4",
-  customDropdown: "flex flex-col justify-center items-center w-full cursor-pointer mb-2",
-  dropdownHeader: "flex justify-around items-center font-bold gap-4",
-  dropdownList: "max-h-[300px] w-[90%] overflow-y-auto mt-2 rounded-[0.3rem]",
-  dropdownItem: "border border-[rgba(198,158,48,0.8)] bg-white rounded-[10px] p-2 my-4 mx-2 cursor-pointer hover:bg-[#f9f9f9] max-[450px]:text-[0.9rem] max-[450px]:m-2 max-[335px]:text-[0.8rem]",
-  activeItem: "bg-[#f4e8c7] font-bold",
-  disabled: "p-2 text-[#888]",
-  close: "flex justify-end",
-  closeSpan: "flex justify-center items-center w-5 h-5",
+  headers: "flex items-center justify-between gap-2 py-4 px-5 bg-[#DBB346]",
+  closeBtn:
+    "flex items-center justify-center w-8 h-8 rounded-full text-[#7a604f] bg-white/40 hover:bg-white/70 transition-colors duration-150",
+  headerTitle: "flex flex-col items-center flex-1 text-[#7a604f]",
+  headersH4: "font-bold text-[1.15rem]",
+  headerRef: "text-xs opacity-80",
+  modeTabs: "flex items-center gap-2 p-3 bg-[#f4e8c7]/50",
+  modeTab:
+    "flex-1 text-center py-2 rounded-full text-sm font-semibold text-[#7A604F] transition-colors duration-150",
+  modeTabActive: "flex-1 text-center py-2 rounded-full text-sm font-semibold bg-[#7A604F] text-white",
+  menuList: "flex flex-col flex-1 overflow-y-auto p-4 gap-1",
+  juzName: "font-bold text-lg text-[#5C6357] text-center mb-3",
+  sectionLabel: "text-xs font-semibold tracking-[0.1em] uppercase text-[#8A6D59] mb-2",
+  customDropdown: "flex flex-col w-full cursor-pointer mb-4",
+  dropdownHeader:
+    "flex justify-between items-center font-bold gap-2 py-3 px-4 border border-[#C2CDD3] rounded-2xl text-[#5C6357]",
+  chevron: "w-5 h-5 transition-transform duration-200 text-[#8A6D59]",
+  chevronOpen: "rotate-180",
+  dropdownList:
+    "max-h-[260px] overflow-y-auto mt-2 rounded-2xl flex flex-col gap-2 p-1 [scrollbar-width:thin]",
+  dropdownItem:
+    "border border-[#C2CDD3] bg-white rounded-xl py-2.5 px-3 text-sm cursor-pointer transition-colors duration-150 hover:border-[#DBB346] hover:bg-[#f4e8c7]/40",
+  activeItem: "bg-[#f4e8c7] border-[#DBB346] font-bold text-[#7a604f]",
+  disabled: "py-2 px-3 text-[#888] text-sm",
 };
 
 const SideDrawerQuran: React.FC<SideDrawerProps> = ({
   setIsOpen,
   juzData,
-  isJuzPending,
-  juzList,
+  allSurahs,
+  surahsLoading,
   selectedMode,
   setSelectedMode,
   initialVerse,
@@ -69,25 +83,29 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ✅ lock body scroll while drawer is open
   useEffect(() => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("mode", selectedMode);
-    router.push(`/quran/${juzData.surahInfo.slug}?${newParams.toString()}`);
-  }, [selectedMode, juzData, router, searchParams]);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, []);
 
   const handleChapterChange = (surahNumber: number) => {
-    const selectedSurah = juzList?.find(
-      (juz: JuzList) => juz.surahNumber === surahNumber
+    const selectedSurah = allSurahs?.find(
+      (surah) => surah.surahNumber === surahNumber
     );
     if (selectedSurah) {
       const newParams = new URLSearchParams(searchParams);
       newParams.set("mode", selectedMode);
       newParams.delete("verse");
       router.push(
-        `/quran/${selectedSurah.surahInfo.slug}?${newParams.toString()}`
+        `/quran/${selectedSurah.slug}?${newParams.toString()}`
       );
     }
     setChapterOpen(false);
+    setIsOpen(false);
   };
 
   const handleModeChange = (mode: "reading" | "translation") => {
@@ -102,53 +120,69 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
   );
 
   return (
-    <div
-      className={sd.overlay}
-      onClick={() => setIsOpen(false)}
-    >
-      <div
-        className={sd.drawer}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className={sd.overlay} onClick={() => setIsOpen(false)}>
+      <div className={sd.drawer} onClick={(e) => e.stopPropagation()}>
         <div className={sd.nav}>
           <div className={sd.headers}>
-            <div onClick={() => setIsOpen(false)} className={sd.close}><span className={sd.closeSpan}><IoMdClose className="w-full h-full" /></span></div>
-            <h4 className={`${primary_font.className} ${sd.headersH4}`}>
-              سورة {juzData.surahInfo.nameAr}
-            </h4>
-            <p className={primary_font.className}>
-              {juzData.surahNumber}:{activeVerse}
-            </p>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+              className={sd.closeBtn}
+            >
+              <IoMdClose className="w-5 h-5" />
+            </button>
+            <div className={sd.headerTitle}>
+              <h4 className={`${primary_font.className} ${sd.headersH4}`}>
+                سورة {juzData.surahInfo.nameAr}
+              </h4>
+              <p className={`${roboto.className} ${sd.headerRef}`}>
+                {juzData.surahNumber}:{activeVerse}
+              </p>
+            </div>
+            <div className="w-8" />
+          </div>
+
+          <div className={`${sd.modeTabs} ${primary_font.className}`}>
+            <button
+              type="button"
+              className={selectedMode === "translation" ? sd.modeTabActive : sd.modeTab}
+              onClick={() => handleModeChange("translation")}
+            >
+              Translation
+            </button>
+            <button
+              type="button"
+              className={selectedMode === "reading" ? sd.modeTabActive : sd.modeTab}
+              onClick={() => handleModeChange("reading")}
+            >
+              Reading
+            </button>
           </div>
 
           <div className={sd.menuList} ref={dropdownRef}>
-            <div>
-              <p className={sd.juzName}>{juzData.juzNameAr}</p>
-            </div>
-            <hr />
+            <p className={sd.juzName}>{juzData.juzNameAr}</p>
 
             {/* Surah Dropdown */}
-            <div
-              className={sd.customDropdown}
-              onClick={() => {
-                setChapterOpen((prev) => !prev);
-                setVerseOpen(false);
-              }}
-            >
-              <div className={`${roboto.className} ${sd.dropdownHeader}`}>
+            <div className={sd.customDropdown}>
+              <div
+                className={`${roboto.className} ${sd.dropdownHeader}`}
+                onClick={() => {
+                  setChapterOpen((prev) => !prev);
+                  setVerseOpen(false);
+                }}
+              >
                 {juzData.surahInfo.nameEn}
-                <MdOutlineKeyboardArrowDown />
+                <MdOutlineKeyboardArrowDown
+                  className={`${sd.chevron} ${chapterOpen ? sd.chevronOpen : ""}`}
+                />
               </div>
               {chapterOpen && (
                 <ul className={sd.dropdownList}>
-                  {isJuzPending ? (
+                  {surahsLoading ? (
                     <li className={sd.disabled}>Loading Surahs...</li>
                   ) : (
-                    Array.from(
-                      new Map(
-                        juzList?.map((juz: JuzList) => [juz.surahNumber, juz])
-                      ).values()
-                    ).map((surah) => (
+                    allSurahs?.map((surah) => (
                       <li
                         key={surah.surahNumber}
                         onClick={() => handleChapterChange(surah.surahNumber)}
@@ -158,26 +192,27 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
                             : ""
                         }`}
                       >
-                        {surah.surahNumber}. {surah.surahInfo.nameEn}
+                        {surah.surahNumber}. {surah.nameEn}
                       </li>
                     ))
                   )}
                 </ul>
               )}
             </div>
-            <hr />
 
             {/* Verse Dropdown */}
-            <div
-              className={sd.customDropdown}
-              onClick={() => {
-                setVerseOpen((prev) => !prev);
-                setChapterOpen(false);
-              }}
-            >
-              <div className={`${roboto.className} ${sd.dropdownHeader}`}>
+            <div className={sd.customDropdown}>
+              <div
+                className={`${roboto.className} ${sd.dropdownHeader}`}
+                onClick={() => {
+                  setVerseOpen((prev) => !prev);
+                  setChapterOpen(false);
+                }}
+              >
                 Verse {activeVerse}
-                <MdOutlineKeyboardArrowDown />
+                <MdOutlineKeyboardArrowDown
+                  className={`${sd.chevron} ${verseOpen ? sd.chevronOpen : ""}`}
+                />
               </div>
               {verseOpen && (
                 <ul className={sd.dropdownList}>
@@ -198,7 +233,10 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
                       >
                         <Link
                           href={`/quran/${juzData.surahInfo.slug}?${newParams.toString()}`}
-                          onClick={() => setVerseOpen(false)}
+                          onClick={() => {
+                            setVerseOpen(false);
+                            setIsOpen(false);
+                          }}
                         >
                           Verse {verseNumber}
                         </Link>
@@ -208,7 +246,6 @@ const SideDrawerQuran: React.FC<SideDrawerProps> = ({
                 </ul>
               )}
             </div>
-            <hr />
           </div>
         </div>
       </div>

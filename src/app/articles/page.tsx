@@ -1,9 +1,18 @@
-import ComingSoon from "@/components/common/Errors/Fallback/comingSoon";
+import type { Metadata } from "next";
+import ArticlesHero from "@/components/Articles/ArticlesHero";
+import ArticlesList from "@/components/Articles/ArticlesList";
 
-export default function Blogs() {
+export const metadata: Metadata = {
+  title: "Articles | Talibulilm",
+  description:
+    "Read Islamic articles, guides, and reflections from Talibulilm covering Quran, Hadith, and daily practice.",
+};
+
+export default function ArticlesPage() {
   return (
     <div>
-      <ComingSoon/>
+      <ArticlesHero />
+      <ArticlesList />
     </div>
-  )
+  );
 }

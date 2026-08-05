@@ -32,8 +32,10 @@ export const hadithApi = {
   getHadithsRandom: (limit: number = 1) =>
     apiClient.get(`hadiths/random?limit=${limit}`).json<HadithItem>(),
 
+  // Returns the admin-scheduled hadith for today's date, or a random one
+  // if nothing is scheduled — the backend handles the fallback.
   getHadithsOfTheDay: () =>
-    apiClient.get(`hadiths/random`).json<HadithResponse>(),
+    apiClient.get(`hadiths/daily`).json<HadithResponse>(),
 
   getCollectionById: (collectionId: number) => apiClient.get(`hadith-collections/${collectionId}`).json<HadithBookCollection2>()
 };

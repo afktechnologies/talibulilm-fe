@@ -17,7 +17,7 @@ const QuranDetails = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className="bg-[#E2E2DE] pt-12 pr-0 pb-30 pl-0 max-md:pt-8 max-md:pb-22 max-[500px]:pt-8 max-[500px]:pb-14 max-[400px]:pt-8 max-[400px]:pb-12">
+    <div className="bg-[#f0eee7] pt-12 pb-30 max-md:pt-8 max-md:pb-22 max-[500px]:pt-8 max-[500px]:pb-14 max-[400px]:pt-8 max-[400px]:pb-12">
       <QuranDetailsPage surahSlug={slug} />
     </div>
   );

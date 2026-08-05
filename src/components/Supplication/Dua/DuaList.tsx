@@ -5,6 +5,20 @@ interface DuaListProps {
 }
 
 const DuaList = ({ duas }: DuaListProps) => {
+  if (duas.length === 0) {
+    return (
+      <section className="w-full py-2">
+        <div className="bg-white border border-dashed border-gray-200 rounded-2xl py-16 px-6 text-center">
+          <div className="text-3xl mb-3">🤲</div>
+          <h2 className="text-base font-bold text-[#003049] mb-1.5">No supplications yet</h2>
+          <p className="text-sm text-gray-500 max-w-sm mx-auto leading-relaxed">
+            This category doesn&apos;t have any supplications added yet. Check back soon.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="w-full py-2">
       {/* Session progress header */}
@@ -32,7 +46,7 @@ const DuaList = ({ duas }: DuaListProps) => {
       <div className="mt-10 text-center py-8 border-t border-dashed border-amber-200">
         <div className="inline-flex items-center gap-2 text-amber-600 text-sm font-semibold bg-amber-50 border border-amber-200 px-5 py-2.5 rounded-full">
           <span className="text-base">☽</span>
-          May Allah accept your evening adhkaar
+          May Allah accept your adhkaar
         </div>
       </div>
     </section>

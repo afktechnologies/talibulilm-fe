@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { lateef } from "@/app/font/font";
 import Translation from "./translation";
 import MainNav from "./mainNav";
 import { useAyahTranslationBySlug, useJuzBySurahSlug } from "@/services/hooks/quran";
@@ -65,17 +64,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ surahSlug }) => {
   if (isJuzPending) {
     return (
       <div className="flex justify-center overflow-x-hidden mx-6 max-md:mx-4">
-        <div className="flex flex-col max-w-[1440px] w-full">
-          <div>
-            <h2 className={lateef.className}></h2>
-            <div>
-              <p></p>
-            </div>
+        <div className="flex flex-col max-w-[1440px] w-full rounded-[20px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)]">
+          <Rectangle width="100%" height="88px" borderRadius="0px" />
+          <div className="bg-white p-8 flex flex-col gap-4">
+            <Rectangle width="40%" height="32px" borderRadius="8px" />
+            <Rectangle width="100%" height="600px" borderRadius="10px" />
           </div>
-        </div>
-
-        <div className="border-t border-[#ddd]">
-          <Rectangle width="100%" height="1000px" borderRadius="10px" />
         </div>
       </div>
     );
@@ -92,18 +86,17 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ surahSlug }) => {
   return (
     <div className="flex justify-center overflow-x-hidden mx-6 max-md:mx-4">
       {juz && (
-        <div className="flex flex-col max-w-[1440px] w-full">
+        <div className="flex flex-col max-w-[1440px] w-full rounded-[20px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)]">
           <div>
             <MainNav
               juzData={juz}
-              isJuzPending={isJuzPending}
               selectedMode={selectedMode}
               setSelectedMode={setSelectedMode}
               initialVerse={initialVerse}
               onVerseSelect={handleVerseSelect}
             />
           </div>
-          <div className="border-t border-[#ddd]">
+          <div>
             <Reading
               juzData={juz}
               isVisible={selectedMode === "reading"}

@@ -6,18 +6,23 @@ import InputGroup from "../common/Inputs/inputGroup";
 const nisabThreshold = 56520; // Nisab threshold in Indian Rupees
 
 const mc = {
-  wrapper: "flex justify-center my-12",
-  container: "w-full max-w-[1440px] flex flex-col justify-center",
-  h2: "text-[3rem] text-[#5C6357] max-md:text-[1.5rem]",
-  p: "text-[#488EAD]",
-  pSpan: "text-[#5C6357] text-[1.1rem] max-md:text-[1rem]",
-  formContainer: "relative border border-[#ccc] p-8 mt-20 mr-2 mb-8 ml-2 rounded max-md:p-2 max-md:mt-20 max-md:mr-4 max-md:mb-0 max-md:ml-4",
-  title: "absolute top-[-1.75rem] left-20 bg-white py-0 px-2 text-[#DBB346] z-[1] text-[2rem] max-md:top-[-1rem] max-md:left-6 max-md:text-[1.2rem]",
-  form: "flex flex-col gap-8 m-8",
-  inputGroup: "flex flex-col",
-  inputGroupLabel: "mb-1 text-[#7D887A] text-[1.5rem] max-md:text-[1rem]",
-  inputGroupInput: "p-2 border-none border-b border-b-[#ccc] bg-transparent outline-none text-[1.5rem] text-[#77A6A1] max-md:text-[1rem] placeholder:text-[#C2CDD3] placeholder:text-[1.2rem] max-md:placeholder:text-[1rem]",
-  inputGroupP: "text-[#7A604F] text-[1.8rem] mt-[0.3rem] font-medium",
+  wrapper: "flex justify-center py-12 px-4",
+  container: "w-full max-w-[900px] flex flex-col justify-center",
+  heading: "text-center mb-10",
+  h2: "text-[2.4rem] text-[#5C6357] max-md:text-[1.6rem]",
+  p: "text-[#7D887A] text-sm mt-2",
+  pSpan: "text-[#5C6357] font-medium",
+  formContainer: "bg-white border border-[#C2CDD3] rounded-2xl p-6 md:p-8 mb-6 shadow-[0_2px_12px_rgba(0,0,0,0.05)]",
+  title: "text-[1.3rem] text-[#5C6357] mb-5 pb-3 border-b border-[#C2CDD3] flex items-center gap-2",
+  titleAccent: "w-1.5 h-6 rounded-full bg-[#DBB346] inline-block",
+  form: "grid grid-cols-1 sm:grid-cols-2 gap-6",
+  resultCard: "bg-[#003049] rounded-2xl p-6 md:p-8",
+  resultRow: "flex flex-col sm:flex-row gap-6 sm:gap-0 sm:items-center sm:justify-between",
+  resultBlock: "flex flex-col gap-1",
+  resultLabel: "text-white/60 text-sm uppercase tracking-wide",
+  resultValue: "text-white text-[1.8rem] font-semibold",
+  resultDivider: "hidden sm:block w-px self-stretch bg-white/15",
+  warning: "text-[#DBB346] text-sm mt-3 bg-white/5 rounded-lg px-4 py-3",
 };
 
 const MainCalculator = () => {
@@ -70,81 +75,82 @@ const MainCalculator = () => {
   return (
     <div className={mc.wrapper}>
       <div className={mc.container}>
-        <div>
+        <div className={mc.heading}>
           <h2 className={`${primary_font.className} ${mc.h2}`}>Zakat Calculator</h2>
           <p className={`${roboto.className} ${mc.p}`}>
             Enter all assets that have been in your possession over a year{" "}
             <span className={mc.pSpan}>(in Indian Rupees)</span>
           </p>
+        </div>
 
-          {/* What You Own */}
-          <div className={mc.formContainer}>
-            <h4 className={`${mc.title} ${primary_font.className}`}>
-              What You Own
-            </h4>
-            <form className={mc.form}>
-              <InputGroup
-                label="Value of Gold & Silver you have"
-                value={gold}
-                onChange={handleInput(setGold)}
-                placeholder="e.g. 50000"
-              />
-              <InputGroup
-                label="Cash at home"
-                value={cash}
-                onChange={handleInput(setCash)}
-                placeholder="e.g. 10000"
-              />
-              <InputGroup
-                label="Bank Balance"
-                value={bank}
-                onChange={handleInput(setBank)}
-                placeholder="e.g. 25000"
-              />
-              <InputGroup
-                label="Value of Goods & Properties"
-                value={property}
-                onChange={handleInput(setProperty)}
-                placeholder="e.g. 30000"
-              />
-            </form>
-          </div>
+        {/* What You Own */}
+        <div className={mc.formContainer}>
+          <h4 className={`${mc.title} ${primary_font.className}`}>
+            <span className={mc.titleAccent} />
+            What You Own
+          </h4>
+          <form className={mc.form}>
+            <InputGroup
+              label="Value of Gold & Silver you have"
+              value={gold}
+              onChange={handleInput(setGold)}
+              placeholder="e.g. 50000"
+            />
+            <InputGroup
+              label="Cash at home"
+              value={cash}
+              onChange={handleInput(setCash)}
+              placeholder="e.g. 10000"
+            />
+            <InputGroup
+              label="Bank Balance"
+              value={bank}
+              onChange={handleInput(setBank)}
+              placeholder="e.g. 25000"
+            />
+            <InputGroup
+              label="Value of Goods & Properties"
+              value={property}
+              onChange={handleInput(setProperty)}
+              placeholder="e.g. 30000"
+            />
+          </form>
+        </div>
 
-          {/* Minus Liabilities */}
-          <div className={mc.formContainer}>
-            <h4 className={`${mc.title} ${primary_font.className}`}>
-              Minus Liabilities
-            </h4>
-            <form className={mc.form}>
-              <InputGroup
-                label="Total repayable Loans/Debts you have"
-                value={debts}
-                onChange={handleInput(setDebts)}
-                placeholder="e.g. 10000"
-              />
-            </form>
-          </div>
+        {/* Minus Liabilities */}
+        <div className={mc.formContainer}>
+          <h4 className={`${mc.title} ${primary_font.className}`}>
+            <span className={mc.titleAccent} />
+            Minus Liabilities
+          </h4>
+          <form className={mc.form}>
+            <InputGroup
+              label="Total repayable Loans/Debts you have"
+              value={debts}
+              onChange={handleInput(setDebts)}
+              placeholder="e.g. 10000"
+            />
+          </form>
+        </div>
 
-          {/* Calculated Result */}
-          <div className={mc.formContainer}>
-            <h4 className={`${mc.title} ${primary_font.className}`}>
-              Your Calculated Net Value
-            </h4>
-            <form className={mc.form}>
-              <div className={mc.inputGroup}>
-                <label className={mc.inputGroupLabel}>Total Value</label>
-                <input value={total.toLocaleString()} readOnly className={mc.inputGroupInput} />
-              </div>
-              <div className={mc.inputGroup}>
-                <label className={mc.inputGroupLabel}>Your Zakat</label>
-                {!warning ? (
-                  <input value={zakat.toLocaleString()} readOnly className={mc.inputGroupInput} />
-                ) : (
-                  <p className={mc.inputGroupP}> &quot;{warning} &quot;</p>
-                )}
-              </div>
-            </form>
+        {/* Calculated Result */}
+        <div className={mc.resultCard}>
+          <div className={mc.resultRow}>
+            <div className={mc.resultBlock}>
+              <span className={`${roboto.className} ${mc.resultLabel}`}>Total Net Value</span>
+              <span className={`${primary_font.className} ${mc.resultValue}`}>
+                ₹{total.toLocaleString()}
+              </span>
+            </div>
+            <div className={mc.resultDivider} />
+            <div className={mc.resultBlock}>
+              <span className={`${roboto.className} ${mc.resultLabel}`}>Your Zakat Due</span>
+              <span className={`${primary_font.className} ${mc.resultValue}`}>
+                {warning ? "₹0" : `₹${zakat.toLocaleString()}`}
+              </span>
+            </div>
           </div>
+          {warning && <p className={`${roboto.className} ${mc.warning}`}>{warning}</p>}
         </div>
       </div>
     </div>

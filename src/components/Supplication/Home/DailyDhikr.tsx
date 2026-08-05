@@ -43,11 +43,15 @@ const DailyDhikr = ({ items }: DailyDhikrProps) => {
           <h2 className="text-[clamp(1.4rem,2.5vw,2rem)] font-bold text-[#003049] tracking-[-0.01em] mb-2">Daily Dhikr &amp; Dua</h2>
           <div className="w-14 h-[3px] bg-[linear-gradient(90deg,#c69e30_0%,#e8c55a_100%)] rounded-[2px]" />
         </div>
-        <div className="grid grid-cols-4 gap-8 max-[1100px]:grid-cols-3 max-md:grid-cols-2 max-md:gap-4 max-[480px]:grid-cols-2 max-[480px]:gap-3">
-          {items.map((dua, index) => (
-            <DailyDhikrCard key={dua.title || index} data={dua} />
-          ))}
-        </div>
+        {items.length === 0 ? (
+          <p className="text-sm text-gray-400">No categories available yet. Check back soon.</p>
+        ) : (
+          <div className="grid grid-cols-4 gap-8 max-[1100px]:grid-cols-3 max-md:grid-cols-2 max-md:gap-4 max-[480px]:grid-cols-2 max-[480px]:gap-3">
+            {items.map((dua, index) => (
+              <DailyDhikrCard key={dua.title || index} data={dua} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

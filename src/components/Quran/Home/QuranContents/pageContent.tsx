@@ -1,120 +1,6 @@
-// import { useEffect, useState } from "react";
-// import { useInView } from "react-intersection-observer";
-// import { usePage } from "@/services/hooks/quran";
-// import styles from "../Cards/pageCard.module.css";
-// import { PageList } from "@/types/surah";
-// import PageCard from "../Cards/pageCard";
-// import Link from "next/link";
-// import JuzAndPageSkeleton from "@/components/skeleton/quran/juzAndPageSkeleton";
-// import FallbackError from "@/components/common/Errors/Fallback/fallbackError";
-
-// interface PageContentProps {
-//   searchQuery: string;
-//   onResultsChange: (hasResults: boolean) => void;
-// }
-
-// const PageContent = ({ searchQuery, onResultsChange }: PageContentProps) => {
-//   const [page, setPage] = useState(1);
-//   const [allData, setAllData] = useState<PageList[]>([]);
-//   const [hasMore, setHasMore] = useState(true);
-//   const limit = 10; // Matches API limit from sample response
-
-//   const { data: pageData, isLoading, error, isFetching } = usePage({ page, limit });
-  
-//   const { ref, inView } = useInView({
-//     threshold: 0,
-//     triggerOnce: false,
-//   });
-
-//   // Handle data accumulation and filtering
-//   useEffect(() => {
-//     if (pageData?.data) {
-//       setAllData(prev => {
-//         // Only append new data if it's a new page
-//         if (page === 1) return pageData.data;
-//         return [...prev, ...pageData.data];
-//       });
-//       if (pageData.meta) {
-//         setHasMore(pageData.meta.hasNextPage);
-//       } else {
-//         setHasMore(false);
-//       }
-//       onResultsChange(pageData.data.length > 0);
-//     } else {
-//       onResultsChange(false);
-//     }
-//   }, [pageData, page, onResultsChange]);
-
-//   // Filter data based on search query
-//   const filteredData = allData.filter(
-//     (item: PageList) =>
-//       item.surahInfo.nameEn
-//         .toLowerCase()
-//         .includes(searchQuery.toLowerCase()) ||
-//       item.pageNumber.toString().includes(searchQuery)
-//   );
-
-//   // Load more data when the observer is in view
-//   useEffect(() => {
-//     if (inView && hasMore && !isFetching) {
-//       setPage(prev => prev + 1);
-//     }
-//   }, [inView, hasMore, isFetching]);
-
-//   // Reset page when search query changes
-//   useEffect(() => {
-//     setPage(1);
-//     setAllData([]);
-//   }, [searchQuery]);
-
-//   if (isLoading && page === 1) return <JuzAndPageSkeleton />;
-
-//   if (error) {
-//     return (
-//       <div>
-//         <FallbackError />
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className={styles.CardContainer}>
-//       {Object.entries(
-//         filteredData.reduce<Record<string, PageList[]>>((groups, item) => {
-//           const surah = item.surahInfo.nameEn;
-//           if (!groups[surah]) groups[surah] = [];
-//           groups[surah].push(item);
-//           return groups;
-//         }, {})
-//       ).map(([surah, items]) => (
-//         <div key={surah} style={{ marginTop: "2rem" }}>
-//           {items.map((item, index) => (
-//             <div
-//               key={item.id}
-//               style={{ marginTop: index === 0 ? "0" : ".8rem" }}
-//             >
-//                 <PageCard item={item} />
-//             </div>
-//           ))}
-//         </div>
-//       ))}
-//       {hasMore && (
-//         <div ref={ref} style={{ height: "20px", margin: "20px 0" }}>
-//           {isFetching && <JuzAndPageSkeleton />}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default PageContent;
-
-
-
-
-
-import { useEffect, useState } from "react";
-import { usePage } from "@/services/hooks/quran";
+import { useEffect } from "react";
+import { useInfinitePagedList } from "@/services/hooks/useInfinitePagedList";
+import { quranApi } from "@/services/api/endpoints/quran";
 import { PageList } from "@/types/surah";
 import PageCard from "../Cards/pageCard";
 import JuzAndPageSkeleton from "@/components/skeleton/quran/juzAndPageSkeleton";
@@ -125,28 +11,21 @@ interface PageContentProps {
   onResultsChange: (hasResults: boolean) => void;
 }
 
+const PAGE_LIMIT = 10;
+
 const PageContent = ({ searchQuery, onResultsChange }: PageContentProps) => {
-  const { data: pageData, isLoading, error } = usePage();
-  const [filteredData, setFilteredData] = useState<PageList[]>([]);
+  const { items, isInitialLoading, isFetchingMore, hasMore, sentinelRef, error } =
+    useInfinitePagedList<PageList>({
+      queryKey: ["page", "infinite", searchQuery || "browse"],
+      fetchPage: (page, limit) => quranApi.getPagesPaged(page, limit, searchQuery || undefined),
+      limit: PAGE_LIMIT,
+    });
 
   useEffect(() => {
-    if (pageData) {
-      const filtered = pageData.filter(
-        (item: PageList) =>
-          item.surahInfo.nameEn
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          item.pageNumber.toString().includes(searchQuery)
-      );
+    if (!isInitialLoading) onResultsChange(items.length > 0);
+  }, [items, isInitialLoading, onResultsChange]);
 
-      setFilteredData(filtered);
-      onResultsChange(filtered.length > 0); // Notify parent about results
-    } else {
-      onResultsChange(false); // No data, no results
-    }
-  }, [pageData, searchQuery, onResultsChange]);
-
-  if (isLoading) return <JuzAndPageSkeleton />;
+  if (isInitialLoading) return <JuzAndPageSkeleton />;
 
   if (error)
     return (
@@ -155,27 +34,51 @@ const PageContent = ({ searchQuery, onResultsChange }: PageContentProps) => {
       </div>
     );
 
+  const grouped = Object.entries(
+    items.reduce<Record<string, PageList[]>>((groups, item) => {
+      const surah = item.surahInfo.nameEn;
+      if (!groups[surah]) groups[surah] = [];
+      groups[surah].push(item);
+      return groups;
+    }, {})
+  );
+
   return (
     <div className="w-full flex flex-col gap-4 px-5 m-0 max-[780px]:py-5 max-[780px]:px-[10px] max-[530px]:p-0">
-      {Object.entries(
-        filteredData.reduce<Record<string, PageList[]>>((groups, item) => {
-          const surah = item.surahInfo.nameEn;
-          if (!groups[surah]) groups[surah] = [];
-          groups[surah].push(item);
-          return groups;
-        }, {})
-      ).map(([surah, items]) => (
+      {grouped.map(([surah, items]) => (
         <div key={surah} style={{ marginTop: "2rem" }}>
           {items.map((item, index) => (
-            <div
-              key={item.id}
-              style={{ marginTop: index === 0 ? "0" : ".8rem" }}
-            >
-                <PageCard item={item} />
+            <div key={item.id} style={{ marginTop: index === 0 ? "0" : ".8rem" }}>
+              <PageCard item={item} />
             </div>
           ))}
         </div>
       ))}
+
+      {/* The sentinel itself has zero visual footprint; the spinner only
+          takes up space while an additional page is actually loading.
+          Pagination now works identically whether browsing or searching,
+          since search results come back paginated from the server too. */}
+      {hasMore && <div ref={sentinelRef} aria-hidden />}
+      {isFetchingMore && (
+        <div className="w-full flex justify-center py-6">
+          <svg className="w-5 h-5 animate-spin text-[#7D887A]" fill="none" viewBox="0 0 24 24">
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+            />
+          </svg>
+        </div>
+      )}
     </div>
   );
 };

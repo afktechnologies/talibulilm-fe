@@ -1,7 +1,13 @@
 "use client";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
-import { roboto } from "@/app/font/font";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { primary_font, roboto } from "@/app/font/font";
+import { useAuthUser } from "@/components/common/Auth/AuthUserContext";
+import { useLogout } from "@/services/hooks/auth";
+import { NAV_LINKS } from "./navLinks";
 
 interface SideDrawerProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -9,41 +15,97 @@ interface SideDrawerProps {
   pageActive: string;
 }
 
-// Define the structure of links
-const links: { name: string; link: string; key: string }[] = [
-  { name: "Home", link: "/", key: "home" },
-    { name: "Quran", link: "/quran", key: "quran" },
-    { name: "Supplication", link: "/supplication", key: "supplication" },
-    { name: "Hadith", link: "/hadith", key: "hadith" },
-    { name: "Scholars", link: "/scholars", key: "scholars" },
-    { name: "QnA", link: "/qna", key: "qna" },
-    { name: "Articles", link: "/articles", key: "articles" },
-    { name: "Zakat Calculator", link: "/zakat-calculator", key: "zakat-calculator" },
-];
+const SideDrawer: React.FC<SideDrawerProps> = ({ setIsOpen, pageActive }) => {
+  const user = useAuthUser();
+  const router = useRouter();
+  const logout = useLogout();
 
-const SideDrawer: React.FC<SideDrawerProps> = ({ setIsOpen, isOpen, pageActive }) => {
+  // Lock background scroll while the drawer is open.
+  useEffect(() => {
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, []);
+
+  function close() {
+    setIsOpen(false);
+  }
+
+  async function handleLogout() {
+    await logout.mutateAsync();
+    close();
+    router.push("/");
+    router.refresh();
+  }
+
   return (
-    <div className="fixed top-0 left-0 bg-[rgba(0,0,0,0.8)] w-full h-screen flex justify-start">
-      <div className="bg-[#5C6357] h-screen w-[60%] flex flex-col">
-        <div className="flex justify-end p-4">
-          <RxCross2 className="w-8 h-8 text-white cursor-pointer" onClick={() => setIsOpen(!isOpen)} />
+    <div
+      className="fixed inset-0 z-[1100] bg-black/60 flex justify-start animate-[fadeIn_0.2s_ease_both]"
+      onClick={close}
+    >
+      <div
+        className="bg-[#5C6357] h-screen w-[78%] max-w-[300px] flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.25)] animate-[slideInLeft_0.3s_ease_both]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-end p-4 border-b border-white/10">
+          <button type="button" aria-label="Close menu" onClick={close}>
+            <RxCross2 className="w-7 h-7 text-white cursor-pointer hover:text-[#DBB346] transition-colors duration-150" />
+          </button>
         </div>
 
-        {/* Navigation Links */}
-        <div className={`${roboto.className} flex flex-col gap-8`}>
-          <ul>
-            {links.map((link) => (
-              <li key={link.key}>
-                <Link
-                  href={link.link}
-                  onClick={() => setIsOpen(false)}
-                  className={pageActive === link.key ? "flex items-center text-[gold] py-2 px-8" : "flex items-center h-12 py-2 px-8 text-white text-[1rem] cursor-pointer no-underline"}
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {/* Navigation links */}
+        <ul className={`${roboto.className} flex flex-col flex-1 overflow-y-auto py-2`}>
+          {NAV_LINKS.map((link) => (
+            <li key={link.key}>
+              <Link
+                href={link.link}
+                onClick={close}
+                className={`flex items-center h-12 py-2 px-8 text-[1rem] no-underline transition-colors duration-150 ${
+                  pageActive === link.key
+                    ? "text-[#DBB346] font-semibold bg-white/5"
+                    : "text-white hover:text-[#DBB346] hover:bg-white/5"
+                }`}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Account section — pinned to the bottom, keeps the profile icon
+            inside the mobile menu instead of cluttering the top bar. */}
+        <div className={`${primary_font.className} border-t border-white/10 p-4`}>
+          {user ? (
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/profile"
+                onClick={close}
+                className="flex items-center gap-3 text-white hover:text-[#DBB346] transition-colors duration-150"
+              >
+                <IoPersonCircleOutline className="w-8 h-8 flex-shrink-0" />
+                <span className="text-[1rem] truncate">{user.firstName}</span>
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={logout.isPending}
+                className="text-left text-sm text-white/70 hover:text-[#DBB346] transition-colors duration-150 disabled:opacity-60"
+              >
+                {logout.isPending ? "Signing out…" : "Sign out"}
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/auth/login"
+              onClick={close}
+              className="flex items-center gap-3 text-white hover:text-[#DBB346] transition-colors duration-150"
+            >
+              <IoPersonCircleOutline className="w-8 h-8 flex-shrink-0" />
+              <span className="text-[1rem]">Sign in</span>
+            </Link>
+          )}
         </div>
       </div>
     </div>

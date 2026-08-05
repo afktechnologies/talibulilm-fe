@@ -11,11 +11,21 @@ const HadithMainPageHero: React.FC<HeroProps> = ({ englishTranslation }) => {
   return (
     <div className="flex justify-center overflow-x-hidden">
       <div className="flex justify-center w-full">
-        <div className="bg-[url('/Images/HadithPageBG.png')] h-[30rem] w-full bg-center bg-no-repeat bg-cover flex justify-center">
-          <div className="flex justify-center items-end w-full max-w-[1440px]">
-            <div className="flex flex-col justify-end items-center text-center w-[50%] text-[#003845] mb-16 gap-4 max-[650px]:w-[80%] max-[450px]:mb-40 max-[450px]:w-[80%]">
-              <h3 className={`${primary_font.className} tracking-[0.1rem] text-[1.9rem] font-bold max-[855px]:tracking-[0] max-[855px]:text-[1.6rem] max-[650px]:text-[1.4rem] max-[450px]:text-[1.3rem]`}>{englishTranslation}</h3>
-              <SearchbarGO />
+        <div className="relative h-[28rem] w-full flex justify-center overflow-hidden max-[450px]:h-[26rem]">
+          <div className="absolute inset-0 bg-[url('/Images/HadithPageBG.png')] bg-center bg-no-repeat bg-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent" />
+
+          <div className="relative flex justify-center items-end w-full max-w-[1440px] pb-14 px-4 max-[450px]:pb-10">
+            <div className="flex flex-col justify-end items-center text-center gap-5 w-full max-w-[700px]">
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#8A6D59] bg-[#f4e8c7]/80 border border-[#DBB346]/40 rounded-full px-4 py-1.5">
+                Sunnah &amp; Hadith
+              </span>
+              <h3 className={`${primary_font.className} tracking-[0.05rem] text-[1.9rem] font-bold text-[#003845] leading-snug max-[855px]:text-[1.6rem] max-[650px]:text-[1.4rem] max-[450px]:text-[1.3rem]`}>
+                {englishTranslation}
+              </h3>
+              <div className="w-full max-w-[560px]">
+                <SearchbarGO />
+              </div>
             </div>
           </div>
         </div>

@@ -1,18 +1,17 @@
-/**
- * /qna/ask/page.tsx — server component
- *
- * To handle the submission server-side, create a route handler at:
- *   /app/api/qna/ask/route.ts
- * and call it from AskForm's handleSubmit with:
- *   await fetch('/api/qna/ask', { method: 'POST', body: JSON.stringify(form) })
- */
-
+import { redirect } from "next/navigation";
 import AskHero            from "@/components/Qna/Ask/AskHero";
 import AskForm            from "@/components/Qna/Ask/AskForm";
 import AskGuidelines      from "@/components/Qna/Ask/AskGuidelines";
 import AskGuidelinesMobile from "@/components/Qna/Ask/AskGuidelinesMobile";
+import { getCurrentUser } from "@/lib/auth/session";
+import { LOGIN_PATH } from "@/lib/auth/constants";
 
-export default function AskPage() {
+export default async function AskPage() {
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect(LOGIN_PATH);
+  }
+
   return (
     <main className="min-h-screen bg-[#f8f7f4]">
       {/* Header — matches QnA list page style */}
@@ -27,7 +26,7 @@ export default function AskPage() {
             {/* Collapsible guidelines on mobile */}
             <AskGuidelinesMobile />
 
-            <AskForm />
+            <AskForm user={user} />
           </div>
 
           {/* ── Right: guidelines sidebar (desktop) ───────────────────── */}

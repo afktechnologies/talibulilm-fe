@@ -19,6 +19,13 @@ export interface SurahResponse {
   message: string;
   code: number;
   data: SurahList[];
+  meta?: {
+    total: number;
+    page: number;
+    limit: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
 }
 
 export interface AyahList {
@@ -52,6 +59,12 @@ export interface AyahResponse {
   data: AyahList[];
 }
 
+export interface AyahSingleResponse {
+  message: string;
+  code: number;
+  data: AyahList;
+}
+
 export interface AyahWithTranslationResponse {
   message: string;
   code: number;
@@ -78,6 +91,13 @@ export interface JuzResponse {
   message: string;
   code: number;
   data: JuzList[];
+  meta?: {
+    total: number;
+    page: number;
+    limit: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
 }
 
 export interface PageList {

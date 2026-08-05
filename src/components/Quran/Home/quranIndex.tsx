@@ -33,9 +33,17 @@ const QuranHeaderContent = () => {
   const [activeTab, setActiveTab] = useState<string>(normalizedTab || "Surah");
   const [nextTab, setNextTab] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  // The input itself stays instantly responsive (bound to `searchQuery`);
+  // the debounced value is what actually triggers a server-side search
+  // request, so rapid typing doesn't fire a request per keystroke.
+  const [debouncedQuery, setDebouncedQuery] = useState<string>("");
   const [isTabTransitioning, setIsTabTransitioning] = useState<boolean>(false);
   const [hasResults, setHasResults] = useState<boolean>(true);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedQuery(searchQuery.trim()), 400);
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
 
   useEffect(() => {
     const newUrl = `/quran?tab=${activeTab.toLowerCase()}`;
@@ -50,6 +58,7 @@ const QuranHeaderContent = () => {
       setTimeout(() => {
         setActiveTab(tab);
         setSearchQuery("");
+        setDebouncedQuery("");
         setIsTabTransitioning(false);
         setNextTab(null);
         setHasResults(true);
@@ -94,14 +103,14 @@ const QuranHeaderContent = () => {
             ) : (
               <JuzAndPageSkeleton />
             )
-          ) : searchQuery && !hasResults ? (
+          ) : debouncedQuery && !hasResults ? (
             <FallbackQuran />
           ) : activeTab === "Surah" ? (
-            <SurahContent searchQuery={searchQuery} onResultsChange={handleResultsChange} />
+            <SurahContent key={debouncedQuery} searchQuery={debouncedQuery} onResultsChange={handleResultsChange} />
           ) : activeTab === "Juz" ? (
-            <JuzContent searchQuery={searchQuery} onResultsChange={handleResultsChange} />
+            <JuzContent key={debouncedQuery} searchQuery={debouncedQuery} onResultsChange={handleResultsChange} />
           ) : (
-            <PageContent searchQuery={searchQuery} onResultsChange={handleResultsChange} />
+            <PageContent key={debouncedQuery} searchQuery={debouncedQuery} onResultsChange={handleResultsChange} />
           )}
         </div>
       </div>

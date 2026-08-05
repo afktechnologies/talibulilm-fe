@@ -1,5 +1,4 @@
-import { lateef } from "@/app/font/font";
-// import Rectangle from "@/components/skeleton/rectangle";
+import { lateef, roboto } from "@/app/font/font";
 
 interface HadithDetailsHeroProps {
   arabicText: string | null;
@@ -7,29 +6,34 @@ interface HadithDetailsHeroProps {
   isLoading?: boolean;
 }
 
-const headingsClass = "tracking-[0.15rem] text-[1.5rem]";
-const titleClass = "bg-[linear-gradient(90deg,#ececec_25%,#f5f5f5_50%,#ececec_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_linear_infinite] h-[24px] w-[200px] mb-8 rounded-[6px]";
+const skeletonLine = "bg-[linear-gradient(90deg,rgba(255,255,255,0.15)_25%,rgba(255,255,255,0.3)_50%,rgba(255,255,255,0.15)_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_linear_infinite] rounded-[6px]";
 
-const HadithDetailsHero: React.FC< HadithDetailsHeroProps> = ({ arabicText, bookName, isLoading  }) => {
+const HadithDetailsHero: React.FC<HadithDetailsHeroProps> = ({ arabicText, bookName, isLoading }) => {
   return (
-    <div className="flex justify-center overflow-x-hidden w-full">
-      <div className="flex justify-end w-full">
-        <div className="bg-[linear-gradient(rgba(0,0,0.5,0),rgba(0,0,0,0.5)),url('/Images/Hadith/DetailsBg.png')] h-[28rem] w-full bg-center bg-no-repeat bg-cover flex justify-center z-[3] absolute">
-          <div className="flex flex-col justify-center items-center text-center text-white mb-12">
-            {isLoading && !arabicText ? (
-              <div className={titleClass}></div>
-            ) : (
-              <h1 className={`${headingsClass} ${lateef.className}`}>{arabicText}</h1>
+    <div
+      className="relative flex justify-center items-center w-full h-[22rem] bg-center bg-no-repeat bg-cover max-md:h-[18rem]"
+      style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.15),rgba(0,0,0,0.55)), url('/Images/Hadith/DetailsBg.png')" }}
+    >
+      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#DBB346] via-[#f4e8c7] to-[#DBB346]" />
 
-            )}
+      <div className="flex flex-col items-center justify-center gap-4 text-center text-white px-4">
+        {isLoading && !arabicText ? (
+          <div className={`${skeletonLine} h-8 w-[220px]`} />
+        ) : (
+          <h1 className={`${lateef.className} text-[2.2rem] tracking-[0.1rem] drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] max-md:text-[1.7rem]`}>
+            {arabicText}
+          </h1>
+        )}
 
-            {isLoading && !bookName ? (
-              <div className={titleClass}></div>
-            ) : (
-              <h1 className={headingsClass}>{bookName}</h1>
-            )}
-          </div>
-        </div>
+        <div className="w-12 h-[2px] rounded-full bg-[#DBB346]/80" />
+
+        {isLoading && !bookName ? (
+          <div className={`${skeletonLine} h-6 w-[160px]`} />
+        ) : (
+          <h2 className={`${roboto.className} text-[1.2rem] tracking-[0.15rem] text-white/85 uppercase max-md:text-[1rem]`}>
+            {bookName}
+          </h2>
+        )}
       </div>
     </div>
   );

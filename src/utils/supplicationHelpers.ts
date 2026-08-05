@@ -50,6 +50,16 @@ export function getCategoryImagePath(category: { name: string; image?: string })
 }
 
 /**
+ * Always resolves to a bundled local image, ignoring `category.image`
+ * entirely — used as the `onError` fallback target when an admin-entered
+ * external image URL is broken, unreachable, or blocked, so a card never
+ * ends up with no image at all.
+ */
+export function getCategoryFallbackImagePath(category: { name: string }): string {
+  return `/Images/Supplications/${decorationFor(category.name).pic}`;
+}
+
+/**
  * Fetches the (optional) translation + transliteration text for a single
  * supplication. Both backend endpoints throw 404 when no rows exist for a
  * given supplication/language, so each is resolved independently and falls

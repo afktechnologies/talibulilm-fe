@@ -10,6 +10,18 @@ export const useSurahs = (options = {}) => {
   });
 };
 
+// Full, unpaginated Surah list (114 rows) — used by navigational chapter
+// pickers (reading-page dropdown, mobile side drawer) that need every
+// Surah available at once, unlike the paginated home-page browse tab.
+export const useAllSurahs = (options = {}) => {
+  return useQuery({
+    queryKey: ["surahs", "all"],
+    queryFn: () => quranApi.getSurahsPaged(1, 0),
+    select: (response) => response.data,
+    ...options,
+  });
+};
+
 export const useJuz = (options = {}) => {
   return useQuery({
     queryKey: ["juz"],
@@ -47,6 +59,19 @@ export const useAyahRandom = (options = {}) => {
   });
 };
 
+export const useAyahOfTheDay = (options = {}) => {
+  // Keying on today's date means a new calendar day (or a fresh page load
+  // after midnight) naturally requests fresh data instead of serving a
+  // stale cached "yesterday" response for the rest of the session.
+  const today = new Date().toISOString().slice(0, 10);
+  return useQuery({
+    queryKey: ["ayahs", "daily", today],
+    queryFn: () => quranApi.getAyahOfTheDay(),
+    select: (response) => response.data,
+    ...options,
+  });
+};
+
 // export const useAyahBySlugForVerse = (options ={})=>{
 //   return useQuery({
 //      queryKey: ["ayahs"],
@@ -65,6 +90,20 @@ export const useAyahBySlug = (slug: string, options = {}) => {
   });
 };
 
+
+export const useAyahBySurahSlugAndAyahNumber = (
+  surahSlug: string | undefined,
+  ayahNumber: number | undefined,
+  options = {}
+) => {
+  return useQuery({
+    queryKey: ["ayahs", surahSlug, ayahNumber],
+    queryFn: () => quranApi.getAyahBySurahSlugAndAyahNumber(surahSlug!, ayahNumber!),
+    select: (response) => response.data,
+    enabled: !!surahSlug && !!ayahNumber,
+    ...options,
+  });
+};
 
 export const useAyahTranslationBySlug = (slug: string, options = {}) => {
   return useQuery({

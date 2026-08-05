@@ -4,7 +4,7 @@ import { FreeMode, Navigation } from "swiper/modules";
 import "swiper/css";
 import DailyHadithCard from "./hadithCard";
 import { primary_font } from "@/app/font/font";
-import { useHadithsRandom } from "@/services/hooks/hadith";
+import { useHadithsOfTheDay, useHadithsRandom } from "@/services/hooks/hadith";
 import { HadithItemList } from "@/types/hadith";
 import FallbackError from "../common/Errors/Fallback/fallbackError";
 import { useRef } from "react";
@@ -17,20 +17,39 @@ interface DailyHadithProps {
 const colors: string[] = ["#2C7DA0", "#629893", "#8A6D59"];
 
 const DailyHadith: React.FC<DailyHadithProps> = ({ limit = 4 }) => {
-  const { data: hadithList = [], isLoading, isError } = useHadithsRandom(limit);
+  // First slide is the admin-scheduled (or random-fallback) hadith of the
+  // day; the rest fill out the carousel with supplementary random hadiths.
+  const {
+    data: dailyHadith,
+    isLoading: isDailyLoading,
+    isError: isDailyError,
+  } = useHadithsOfTheDay();
+  const {
+    data: randomHadiths = [],
+    isLoading: isRandomLoading,
+    isError: isRandomError,
+  } = useHadithsRandom(Math.max(limit - 1, 1));
+
+  const hadithList: HadithItemList[] = dailyHadith
+    ? [dailyHadith, ...randomHadiths.filter((hadith) => hadith.id !== dailyHadith.id)]
+    : randomHadiths;
+  const isLoading = isDailyLoading || isRandomLoading;
+  const isError = isDailyError && isRandomError;
+
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
 
-  const titleClass = "flex flex-col items-center justify-center gap-3 tracking-[0.12em] text-center mb-8 text-[1.8rem] text-[#5C6357] max-[890px]:text-[1.5rem] max-[790px]:text-[1.3rem]";
-  const navWrapperClass = "flex items-center gap-4 max-[400px]:gap-2";
-  const navBtnClass = "flex justify-center items-center bg-transparent border-none w-[40px] h-[40px] text-[#0080b9] cursor-pointer transition-[transform,color] duration-200 ease-in-out hover:scale-[1.15] hover:text-[#005f87] max-[790px]:w-[30px] max-[790px]:h-[30px] [&>svg]:w-full [&>svg]:h-full";
+  const titleClass = "text-[1.8rem] text-[#5C6357] max-[890px]:text-[1.5rem] max-[790px]:text-[1.3rem]";
+  const subtitleClass = "text-sm text-[#7D887A] mt-1 max-[790px]:text-xs";
+  const navWrapperClass = "flex items-center gap-3 max-[400px]:gap-2";
+  const navBtnClass = "flex justify-center items-center bg-white border border-[#C2CDD3] rounded-full w-10 h-10 text-[#5C6357] cursor-pointer transition-[transform,color,border-color] duration-200 ease-in-out hover:scale-[1.08] hover:text-[#DBB346] hover:border-[#DBB346] shadow-[0_2px_8px_rgba(0,0,0,0.06)] max-[790px]:w-8 max-[790px]:h-8 [&>svg]:w-4 [&>svg]:h-4";
 
   if (isError)
     return (
-      <div className="flex justify-center items-center w-full py-8 px-4">
+      <div className="flex justify-center items-center w-full py-10 px-4">
         <div className="max-w-[1440px] w-full">
-          <h1 className={`${titleClass} ${primary_font.className}`}>
-            Hadith Of The Day
+          <h1 className={`${titleClass} ${primary_font.className} text-center mb-8`}>
+            Wisdom from the Prophet ﷺ
           </h1>
           <FallbackError />
         </div>
@@ -38,34 +57,24 @@ const DailyHadith: React.FC<DailyHadithProps> = ({ limit = 4 }) => {
     );
 
   return (
-    <div className="flex justify-center items-center w-full py-8 px-4">
+    <div className="flex justify-center items-center w-full py-10 px-4 bg-[#f8f7f4]">
       <div className="max-w-[1440px] w-full">
-        {/* <h1 className={`${styles.title} ${primary_font.className}`}>
-          Hadith Of The Day
-        </h1>
-
-        
-        <div className={styles.navWrapper} >
-          <button ref={prevRef} className={styles.navBtn}>
-            <LiaLongArrowAltLeftSolid />
-          </button>
-          <button ref={nextRef} className={styles.navBtn}>
-            <LiaLongArrowAltRightSolid />
-          </button>
-        </div> */}
-
-        <h1 className={`${titleClass} ${primary_font.className}`}>
-  Hadith Of The Day
-  <span className={navWrapperClass}>
-    <button ref={prevRef} className={navBtnClass}>
-      < LiaLongArrowAltLeftSolid/>
-    </button>
-    <button ref={nextRef} className={navBtnClass}>
-      <LiaLongArrowAltRightSolid />
-    </button>
-  </span>
-</h1>
-
+        <div className="flex items-end justify-between gap-4 mb-8 px-4 max-[600px]:flex-col max-[600px]:items-center max-[600px]:text-center max-[600px]:gap-3">
+          <div>
+            <h1 className={`${titleClass} ${primary_font.className} tracking-[0.04em]`}>
+              Wisdom from the Prophet ﷺ
+            </h1>
+            <p className={subtitleClass}>Authentic sayings to reflect on today</p>
+          </div>
+          <span className={navWrapperClass}>
+            <button ref={prevRef} aria-label="Previous hadith" className={navBtnClass}>
+              <LiaLongArrowAltLeftSolid />
+            </button>
+            <button ref={nextRef} aria-label="Next hadith" className={navBtnClass}>
+              <LiaLongArrowAltRightSolid />
+            </button>
+          </span>
+        </div>
 
         <Swiper
           modules={[FreeMode, Navigation]}

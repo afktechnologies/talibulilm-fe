@@ -24,13 +24,16 @@ const quranBookmarkSlice = createSlice({
     removeQuranBookmark(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
+    setQuranBookmarks(state, action: PayloadAction<AyahListWithTranslation[]>) {
+      state.items = action.payload;
+    },
     clearQuranBookmarks(state) {
       state.items = [];
     },
   },
 });
 
-export const { addQuranBookmark, removeQuranBookmark, clearQuranBookmarks } =
+export const { addQuranBookmark, removeQuranBookmark, setQuranBookmarks, clearQuranBookmarks } =
   quranBookmarkSlice.actions;
 
 export default quranBookmarkSlice.reducer;

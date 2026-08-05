@@ -27,9 +27,17 @@ The codebase is mid-migration from static JSON mocks to the live backend, and di
 - **Static JSON fallback (Supplication, Qna, Scholars)**: several pages still import fixture data straight from `src/store/data/*.json` (e.g. `src/app/qna/page.tsx` imports `qnaData.json`). Some of these files contain the real API-backed version commented out directly above/below the static version, showing the intended replacement — read the surrounding comments before changing these pages, they document the migration path in progress.
 - **Not wired at all (Scholars, Qna ask)**: `src/app/scholars/[slug]/page.tsx` and `src/app/scholars/page.tsx` render `<ComingSoon />` with the real implementation fully commented out below. `src/app/api/qna/ask/route.ts` is a Next.js route handler that logs the submission and returns a fake success — the real `fetch` to the backend is commented out. Don't assume a page is unimplemented just because the route exists; check for `ComingSoon`/commented blocks first.
 
-`src/constants/api.ts` hardcodes `API_BASE_URL` to the production API (`https://api.talibulilm.in`) — it does **not** read `process.env.API_BASE_URL` even though `.env`/`.env.example` define that var. If you need env-driven API URLs, this is the disconnect to fix; don't assume changing `.env` has any effect today.
+`src/constants/api.ts` reads `API_BASE_URL` from `NEXT_PUBLIC_API_BASE_URL` (see `.env.local`/`.env.example`), falling back to `http://localhost:8000`. It must stay `NEXT_PUBLIC_`-prefixed — `apiClient` runs in the browser for public, unauthenticated content reads.
 
-`apiClient` (`src/services/api/client.ts`) is a shared `ky` instance with a `beforeRequest` hook stubbed out for future auth-token injection — no auth/token handling exists on the frontend yet.
+### Auth (BFF pattern, mirrors `talibulilm-admin`)
+
+`src/lib/auth/{session.ts,backend.ts,constants.ts}` + `src/middleware.ts` + `src/app/api/{auth/login,auth/register,auth/logout,backend/[...path]}/route.ts` implement the same Next.js backend-for-frontend pattern as the admin panel: route handlers set httpOnly session cookies (`tlm_access_token`/`tlm_refresh_token`/`tlm_user`), and `backendFetch` (server-only) attaches the Bearer token and silently refreshes on 401. Client code never touches a token directly.
+
+This differs from the admin panel in one important way: **almost the entire site is public**. `apiClient`/`services/hooks/*` keep hitting the backend directly for public content (no proxy, no auth needed) — the BFF layer above exists only for the login/register/logout flow and any future authenticated-user action (routed through `/api/backend/[...path]`). `src/middleware.ts` reflects this: it only redirects an already-logged-in visitor away from `/auth/login`/`/auth/register`, it doesn't gate any other route.
+
+Session length: 30-day refresh tokens (`REFRESH_TOKEN_MAX_AGE` in `src/lib/auth/constants.ts`), matching backend's `JWT_REFRESH_EXPIRATION` for `Role.USER` accounts — much longer than the admin panel's 1-day admin session, by backend design (`AuthService.refreshExpirationFor`).
+
+`src/components/common/Auth/AuthUserContext.tsx`'s `useAuthUser()` returns `AuthUser | null` (unlike the admin panel's, which throws) — most pages render fine for a logged-out visitor, so check for `null` rather than assuming a user exists. `src/components/common/Navbar/AccountMenu.tsx` is the reference consumer (sign-in link vs. account/logout dropdown).
 
 ### App Router structure
 

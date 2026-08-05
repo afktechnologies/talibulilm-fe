@@ -2,15 +2,13 @@
 
 import Image from "next/image";
 import ayahbg from "../../../public/Images/dailyAyah.png"; // Static Image
-import { IoBookOutline, IoPlayOutline } from "react-icons/io5";
 import {
   MdOutlineBookmarkAdd,
   MdOutlineBookmark,
 } from "react-icons/md";
-import { LiaRedoAltSolid } from "react-icons/lia";
 import { lateef, primary_font, roboto } from "../../app/font/font.js";
 import WaqfComponent from "../common/Waqf/waqf";
-import { useAyahRandom } from "@/services/hooks/quran";
+import { useAyahOfTheDay } from "@/services/hooks/quran";
 import { Skeleton } from "@mui/material";
 import FallbackError from "../common/Errors/Fallback/fallbackError";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -20,25 +18,28 @@ import {
 } from "@/store/slice/quranBookmarkSlice";
 
 const dailyAyahStyles = {
-  wrapper: "flex justify-center overflow-x-hidden mt-8 mr-4 mb-8 ml-0",
+  wrapper: "flex justify-center overflow-x-hidden py-10 px-4",
   container: "flex flex-col max-w-[1440px] w-full",
-  title: "flex flex-col justify-center items-center gap-4",
-  titleH3: "text-[1.8rem] text-[#5C6357]",
-  titleHr: "w-[85%] ml-[15rem] text-[#C2CDD3] max-[570px]:w-[95%] max-[570px]:ml-[1rem]",
-  details: "flex items-center gap-8",
-  image: "flex justify-start items-center max-[570px]:hidden",
-  content: "w-[85%] flex justify-between items-center gap-20 max-md:gap-12 max-md:mt-4 max-[570px]:w-[95%] max-[570px]:gap-12 max-[570px]:mt-4 max-[570px]:ml-8 max-[360px]:w-[95%] max-[360px]:gap-[1.8rem]",
-  left: "flex flex-col gap-4 text-[#7D887A] max-md:h-full max-md:justify-between max-[570px]:h-[90%] max-[570px]:justify-between max-[570px]:text-[0.8rem]",
-  leftSvg: "w-[1.2rem] h-[1.2rem] max-md:w-[1.1rem] max-md:h-[1.1rem] max-[570px]:w-[1rem] max-[570px]:h-[1rem] max-[360px]:w-[0.8rem] max-[360px]:h-[0.8rem]",
-  right: "flex flex-col gap-4 items-end justify-end mx-2",
-  rightH4: "text-[2.8rem] text-[#2c7da0] font-normal tracking-[0.1rem] max-[973px]:text-[2.4rem] max-md:text-[2.2rem] max-[570px]:text-[2rem] max-[430px]:text-[1.6rem] max-[360px]:text-[1.4rem]",
+  title: "flex flex-col items-center gap-1 text-center mb-8",
+  titleH3: "text-[1.8rem] text-[#5C6357] tracking-[0.04em] max-[890px]:text-[1.5rem] max-[790px]:text-[1.3rem]",
+  titleSub: "text-sm text-[#7D887A] max-[790px]:text-xs",
+  card: "relative bg-white rounded-2xl border border-[#C2CDD3] shadow-[0_4px_20px_rgba(0,0,0,0.05)] w-[95%] mx-auto overflow-hidden",
+  cardAccent: "absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#DBB346] via-[#c69e30] to-[#DBB346]",
+  inner: "p-8 max-md:p-6 max-[570px]:p-5",
+  headerRow: "flex items-center justify-between gap-4 mb-6",
+  refBadge: "inline-flex items-center gap-1.5 text-sm font-semibold text-[#8A6D59] bg-[rgba(219,179,70,0.12)] border border-[rgba(219,179,70,0.3)] rounded-full py-1.5 px-4",
+  bookmarkBtn: "flex items-center justify-center w-11 h-11 rounded-full text-[#DBB346] transition-[background-color,transform] duration-150 hover:bg-[rgba(219,179,70,0.12)] active:scale-90 max-[570px]:w-10 max-[570px]:h-10",
+  bookmarkIcon: "w-6 h-6 max-[570px]:w-5 max-[570px]:h-5",
+  details: "flex items-center gap-10 max-md:gap-6",
+  image: "flex justify-start items-center flex-shrink-0 max-[700px]:hidden",
+  content: "w-full flex flex-col gap-5",
   arabic: "flex items-center text-right [direction:rtl] w-full",
-  arabicH4: "inline-block [direction:rtl] whitespace-pre-wrap",
-  rightP: "text-[1.3rem] tracking-[0.075rem] font-thin max-[973px]:text-[1.2rem] max-md:text-[1rem] max-[570px]:text-[1rem] max-[430px]:text-[0.9rem] max-[360px]:text-[0.8rem]",
+  arabicH4: "inline-block [direction:rtl] whitespace-pre-wrap text-[2.6rem] leading-[1.9] max-[973px]:text-[2.2rem] max-md:text-[2rem] max-[570px]:text-[1.7rem] max-[430px]:text-[1.5rem]",
+  rightP: "text-[1.2rem] tracking-[0.03rem] font-normal text-[#5C6357] leading-relaxed max-[973px]:text-[1.1rem] max-md:text-[1rem] max-[570px]:text-[0.95rem] max-[430px]:text-[0.9rem]",
 };
 
 const DailyAyah = () => {
-  const { data: ayahData, isLoading, error } = useAyahRandom();
+  const { data: ayahData, isLoading, error } = useAyahOfTheDay();
   const dispatch = useAppDispatch();
   const bookmarks = useAppSelector((state) => state.quranBookmark.items);
 
@@ -61,37 +62,20 @@ const DailyAyah = () => {
       <div className={dailyAyahStyles.wrapper}>
         <div className={dailyAyahStyles.container}>
           <div className={dailyAyahStyles.title}>
-            <h3 className={`${primary_font.className} ${dailyAyahStyles.titleH3}`}>Daily Ayah</h3>
-            <hr className={dailyAyahStyles.titleHr} />
+            <h3 className={`${primary_font.className} ${dailyAyahStyles.titleH3}`}>Ayah of the Day</h3>
           </div>
-          <div className={dailyAyahStyles.details}>
-            <div className={dailyAyahStyles.image}>
-              <Image
-                src={ayahbg}
-                alt="Daily Ayah Background"
-                width="224"
-                height="230"
-              />
-            </div>
-            <div className={dailyAyahStyles.content}>
-              <div className={dailyAyahStyles.left}>
-                <p>
-                  <Skeleton variant="text" width="100%" height={16} />
-                </p>
-                <IoBookOutline className={dailyAyahStyles.leftSvg} />
-                <IoPlayOutline className={dailyAyahStyles.leftSvg} />
-                <MdOutlineBookmarkAdd className={dailyAyahStyles.leftSvg} />
-                <LiaRedoAltSolid className={dailyAyahStyles.leftSvg} />
-              </div>
-              <div className={dailyAyahStyles.right}>
-                <div className={dailyAyahStyles.arabic}>
-                  <h4 className={`${lateef.className} ${dailyAyahStyles.arabicH4}`}>
-                    <Skeleton variant="text" width="600px" height={32} />
-                  </h4>
+          <div className={dailyAyahStyles.card}>
+            <div className={dailyAyahStyles.cardAccent} />
+            <div className={dailyAyahStyles.inner}>
+              <div className={dailyAyahStyles.details}>
+                <div className={dailyAyahStyles.image}>
+                  <Image src={ayahbg} alt="Daily Ayah Background" width="224" height="230" />
                 </div>
-                <p className={`${roboto.className} ${dailyAyahStyles.rightP}`}>
-                  <Skeleton variant="text" width="600px" height={32} />
-                </p>
+                <div className={dailyAyahStyles.content}>
+                  <Skeleton variant="text" width="30%" height={28} />
+                  <Skeleton variant="text" width="100%" height={64} />
+                  <Skeleton variant="text" width="80%" height={32} />
+                </div>
               </div>
             </div>
           </div>
@@ -112,49 +96,45 @@ const DailyAyah = () => {
     <div className={dailyAyahStyles.wrapper}>
       <div className={dailyAyahStyles.container}>
         <div className={dailyAyahStyles.title}>
-          <h3 className={`${primary_font.className} ${dailyAyahStyles.titleH3}`}>Daily Ayah</h3>
-          <hr className={dailyAyahStyles.titleHr} />
+          <h3 className={`${primary_font.className} ${dailyAyahStyles.titleH3}`}>Ayah of the Day</h3>
+          <p className={`${roboto.className} ${dailyAyahStyles.titleSub}`}>A verse from the Quran to reflect on today</p>
         </div>
-        <div className={dailyAyahStyles.details}>
-          <div className={dailyAyahStyles.image}>
-            <Image
-              src={ayahbg}
-              alt="Daily Ayah Background"
-              width="224"
-              height="230"
-            />
-          </div>
-          <div className={dailyAyahStyles.content}>
-            <div className={dailyAyahStyles.left}>
-              <p>
-                {ayahData.surahNumber}
-                <span>:</span>
-                {ayahData.ayahNumber}
-              </p>
-              <IoBookOutline className={dailyAyahStyles.leftSvg} />
-              <IoPlayOutline className={dailyAyahStyles.leftSvg} />
-              <div
+        <div className={dailyAyahStyles.card}>
+          <div className={dailyAyahStyles.cardAccent} />
+          <div className={dailyAyahStyles.inner}>
+            <div className={dailyAyahStyles.headerRow}>
+              <span className={`${roboto.className} ${dailyAyahStyles.refBadge}`}>
+                Surah {ayahData.surahNumber} : Ayah {ayahData.ayahNumber}
+              </span>
+              <button
+                type="button"
                 onClick={handleBookmarkToggle}
-                style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+                aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
+                className={dailyAyahStyles.bookmarkBtn}
               >
                 {isBookmarked ? (
-                  <MdOutlineBookmark className={dailyAyahStyles.leftSvg} />
+                  <MdOutlineBookmark className={dailyAyahStyles.bookmarkIcon} />
                 ) : (
-                  <MdOutlineBookmarkAdd className={dailyAyahStyles.leftSvg} />
+                  <MdOutlineBookmarkAdd className={dailyAyahStyles.bookmarkIcon} />
                 )}
-              </div>
-              <LiaRedoAltSolid className={dailyAyahStyles.leftSvg} />
+              </button>
             </div>
-            <div className={dailyAyahStyles.right}>
-              <div className={dailyAyahStyles.arabic}>
-                <h4 className={`${lateef.className} ${dailyAyahStyles.arabicH4}`}>
-                  {ayahData.arabicText}
-                  <WaqfComponent ayah={ayahData.ayahNumber} />
-                </h4>
+
+            <div className={dailyAyahStyles.details}>
+              <div className={dailyAyahStyles.image}>
+                <Image src={ayahbg} alt="Daily Ayah Background" width="224" height="230" />
               </div>
-              <p className={`${roboto.className} ${dailyAyahStyles.rightP}`}>
-                {ayahData.translations[0].translationText}
-              </p>
+              <div className={dailyAyahStyles.content}>
+                <div className={dailyAyahStyles.arabic}>
+                  <h4 className={`${lateef.className} ${dailyAyahStyles.arabicH4}`}>
+                    {ayahData.arabicText}
+                    <WaqfComponent ayah={ayahData.ayahNumber} />
+                  </h4>
+                </div>
+                <p className={`${roboto.className} ${dailyAyahStyles.rightP}`}>
+                  {ayahData.translations[0].translationText}
+                </p>
+              </div>
             </div>
           </div>
         </div>

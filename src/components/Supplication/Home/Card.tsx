@@ -1,15 +1,13 @@
-import { MdOutlineBookmarkAdd } from "react-icons/md";
-import { primary_font, roboto } from "@/app/font/font";
+"use client";
 
-type Dua = {
-  title: string;
-  arabicDua: string;
-  transliteration: string;
-  translation: string;
-};
+import { MdOutlineBookmark, MdOutlineBookmarkAdd } from "react-icons/md";
+import { primary_font, roboto } from "@/app/font/font";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addSupplicationBookmark, removeSupplicationBookmark } from "@/store/slice/supplicationBookmarkSlice";
+import type { DuaEntry } from "@/components/Supplication/Dua/DuaCard";
 
 type DuaCardProps = {
-  data: Dua;
+  data: DuaEntry;
 };
 
 const dc = {
@@ -23,13 +21,34 @@ const dc = {
 };
 
 const DuaCard = ({ data }: DuaCardProps) => {
+  const dispatch = useAppDispatch();
+  const bookmarks = useAppSelector((state) => state.supplicationBookmark.items);
+  const bookmarked = bookmarks.some((b) => b.id === data.id);
+
+  const handleBookmarkToggle = () => {
+    if (bookmarked) {
+      dispatch(removeSupplicationBookmark(data.id));
+    } else {
+      dispatch(addSupplicationBookmark(data));
+    }
+  };
+
   return (
     <div className={dc.card}>
         <div className={`${primary_font.className} ${dc.title}`}>
       <h2 className={dc.titleH2}>{data.title}</h2>
-      <MdOutlineBookmarkAdd className={dc.bookmarkIcon} />
+      <button
+        onClick={handleBookmarkToggle}
+        aria-label={bookmarked ? "Remove bookmark" : "Bookmark this dua"}
+      >
+        {bookmarked ? (
+          <MdOutlineBookmark className={dc.bookmarkIcon} />
+        ) : (
+          <MdOutlineBookmarkAdd className={dc.bookmarkIcon} />
+        )}
+      </button>
       </div>
-      <h3 className={`${roboto.className} ${dc.h3}`} >{data.arabicDua}</h3>
+      <h3 className={`${roboto.className} ${dc.h3}`} >{data.arabic}</h3>
       <p className={`${roboto.className} ${dc.p}`} >{data.transliteration}</p>
       <p className={`${roboto.className} ${dc.p} ${dc.pLast}`} >{data.translation}</p>
     </div>

@@ -20,16 +20,25 @@ function formatDate(iso: string): string {
   });
 }
 
+// The full answer is authored as HTML via the admin panel's rich-text
+// editor and rendered as such in QnaCard — but the collapsed-card summary
+// is plain text, so any HTML fallen back on here must have its tags
+// stripped first or they'd show up literally (e.g. "<p>...</p>").
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 function mapQnaEntry(item: QnaList): QnaEntry {
+  const answerText = item.answer?.answer ?? "";
   return {
     id: item.id,
     number: `Q${String(item.id).padStart(3, "0")}`,
     category: String(item.categoryId ?? ""),
     categoryLabel: item.category?.name ?? "General",
     question: item.question,
-    summary: item.shortAnswer?.trim() || `${item.answer.slice(0, 160).trim()}…`,
-    answer: [{ heading: null, text: item.answer }],
-    references: item.references ?? [],
+    summary: item.answer?.shortAnswer?.trim() || `${stripHtml(answerText).slice(0, 160).trim()}…`,
+    answer: [{ heading: null, text: answerText }],
+    references: item.answer?.references ?? [],
     date: formatDate(item.createdAt),
     views: item.viewCount,
   };

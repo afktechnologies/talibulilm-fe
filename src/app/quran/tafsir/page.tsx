@@ -1,22 +1,25 @@
-// import TafsirMainPage from "@/components/Quran/Tafsir/mainTafsirPage"
-// import styles from "./index.module.css"
+import TafsirMainPage from "@/components/Quran/Tafsir/mainTafsirPage";
 
-// const QuranTafsir = () => {
-//   return (
-//     <div className={styles.main}>
-//          <TafsirMainPage/>
-//     </div>
-//   )
-// }
-
-// export default QuranTafsir
-
-import React from 'react'
-
-function Tafsir() {
-  return (
-    <div>This is tafsir</div>
-  )
+interface QuranTafsirPageProps {
+  searchParams: Promise<{
+    surahSlug?: string;
+    ayahNumber?: string;
+    language?: string;
+  }>;
 }
 
-export default Tafsir
+const QuranTafsir = async ({ searchParams }: QuranTafsirPageProps) => {
+  const params = await searchParams;
+
+  return (
+    <div className="pb-20">
+      <TafsirMainPage
+        initialSurahSlug={params.surahSlug || null}
+        initialAyahNumber={params.ayahNumber ? parseInt(params.ayahNumber, 10) : null}
+        initialLanguage={params.language || null}
+      />
+    </div>
+  );
+};
+
+export default QuranTafsir;

@@ -50,6 +50,9 @@ const OtherAdhkaar = ({ items }: OtherAdhkaarProps) => {
         </div>
 
         {/* Accordion list */}
+        {items.length === 0 ? (
+          <p className="text-sm text-gray-400">No more categories to show yet.</p>
+        ) : (
         <div className={oa.accordionList} role="list">
           {items.map((item, index) => (
             <div
@@ -130,6 +133,7 @@ const OtherAdhkaar = ({ items }: OtherAdhkaarProps) => {
             </div>
           ))}
         </div>
+        )}
       </div>
     </section>
   );

@@ -24,13 +24,16 @@ const hadithBookmarkSlice = createSlice({
     removeBookmark(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
+    setHadithBookmarks(state, action: PayloadAction<HadithItemList[]>) {
+      state.items = action.payload;
+    },
     clearBookmarks(state) {
       state.items = [];
     },
   },
 });
 
-export const { addBookmark, removeBookmark, clearBookmarks } =
+export const { addBookmark, removeBookmark, setHadithBookmarks, clearBookmarks } =
   hadithBookmarkSlice.actions;
 
 export default hadithBookmarkSlice.reducer;
